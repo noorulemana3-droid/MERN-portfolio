@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f1f5f9;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --muted: #64748b;
+  --border: #0f172a1a;
+  --accent: #0ea5e9;
+  --accent-secondary: #4f46e5;
+  --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+  --glow: #0ea5e926;
+  --glass: #ffffffb8;
+  --glass-border: #0f172a14;
+  --nav: #f1f5f9cc;
+  --danger: #ef4444;
+  --surface-gradient: linear-gradient(
+    160deg,
+    #f8fafc 0%,
+    #e2e8f0 45%,
+    #dbeafe 100%
+  );
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --muted: #94a3b8;
+  --border: #94a3b829;
+  --accent: #38bdf8;
+  --accent-secondary: #6366f1;
+  --accent-soft: color-mix(in oklab, var(--accent) 18%, transparent);
+  --glow: #38bdf81f;
+  --glass: #1e293ba6;
+  --glass-border: #94a3b824;
+  --nav: #0f172ac7;
+  --danger: #f87171;
+  --surface-gradient:
+    radial-gradient(ellipse at 20% 0%, #1e3a5f 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, #312e81 0%, transparent 45%),
+    linear-gradient(180deg, #0f172a 0%, #0b1224 100%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-syne);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
+  background-image: var(--surface-gradient);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
+  color: var(--foreground);
+}
+
+.font-display {
+  font-family: var(--font-syne), var(--font-outfit), system-ui, sans-serif;
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  color: white;
+}
+
+.container-narrow {
+  @apply mx-auto w-full max-w-6xl;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+.section-pad {
+  @apply px-4 py-20 sm:px-6 md:py-28 lg:px-8;
+}
+
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
