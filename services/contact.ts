@@ -44,11 +44,21 @@ export async function saveContactMessage(
       select: { id: true },
     });
 
-    const emails = isResendConfigured()
-      ? await sendContactEmails(input, row.id)
-      : { ownerAlertSent: false, confirmationSent: false };
+    let emails: ContactEmailResult = {
+      ownerAlertSent: false,
+      confirmationSent: false,
+    };
 
-    if (!isResendConfigured()) {
+    if (isResendConfigured()) {
+      try {
+        emails = await sendContactEmails(input, row.id);
+      } catch (emailError) {
+        console.error(
+          "[contact] email failed after save:",
+          emailError instanceof Error ? emailError.message : emailError,
+        );
+      }
+    } else {
       console.warn(
         "[contact] saved without email — set RESEND_API_KEY to enable alerts",
       );

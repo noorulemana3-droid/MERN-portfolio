@@ -26,7 +26,11 @@ export async function POST(request: Request) {
       id: result.id,
       emails: result.emails,
     });
-  } catch {
+  } catch (error) {
+    console.error(
+      "[api/contact] unexpected error:",
+      error instanceof Error ? error.message : error,
+    );
     return NextResponse.json(
       { error: "Unexpected server error" },
       { status: 500 },
