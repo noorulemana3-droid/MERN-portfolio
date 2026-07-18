@@ -10,7 +10,7 @@ export async function proxy(request: NextRequest) {
   const session = token ? await verifySessionToken(token) : null;
 
   const isDashboard = pathname.startsWith("/dashboard");
-  const isLogin = pathname === "/login";
+  const isLogin = pathname === "/login" || pathname === "/admin";
 
   if (isDashboard && !session) {
     const loginUrl = new URL("/login", request.url);
@@ -26,5 +26,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/dashboard/:path*", "/login", "/admin"],
 };

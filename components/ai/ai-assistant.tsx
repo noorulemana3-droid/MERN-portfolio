@@ -64,8 +64,8 @@ export function AiAssistant() {
   };
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 px-4 pb-5 pt-0 sm:px-6 sm:pb-6">
-      <div className="pointer-events-auto ml-0 mr-auto w-fit max-w-full translate-y-0">
+    <div className="pointer-events-none fixed bottom-5 left-4 z-50 sm:bottom-6 sm:left-6">
+      <div className="pointer-events-auto w-fit max-w-[calc(100vw-2rem)]">
         <button
           type="button"
           onClick={() => setOpen(true)}
