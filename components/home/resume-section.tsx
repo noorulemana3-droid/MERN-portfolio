@@ -18,7 +18,7 @@ export function ResumeSection() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="glass mx-auto max-w-3xl rounded-2xl p-6 shadow-xl shadow-black/5 md:p-8"
+        className="glass mx-auto max-w-3xl rounded-2xl p-6 md:p-8"
       >
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-4">

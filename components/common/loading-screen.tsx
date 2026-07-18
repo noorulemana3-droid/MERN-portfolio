@@ -21,10 +21,11 @@ export function LoadingScreen() {
     >
       <div className="text-center">
         <p className="font-display text-2xl font-semibold tracking-tight text-foreground">
-          {SITE.name}
+          {SITE.shortName}
+          <span className="gradient-text">.</span>
         </p>
-        <div className="mx-auto mt-5 h-1 w-28 overflow-hidden rounded-full bg-accent-soft">
-          <div className="h-full w-1/2 animate-pulse rounded-full bg-accent" />
+        <div className="mx-auto mt-6 h-[2px] w-32 overflow-hidden rounded-full bg-accent-soft">
+          <div className="h-full w-1/2 animate-pulse rounded-full bg-gradient-to-r from-accent to-accent-secondary" />
         </div>
       </div>
     </div>

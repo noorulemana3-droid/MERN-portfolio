@@ -19,7 +19,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
-          className="glass rounded-2xl p-8 shadow-xl shadow-black/5 md:p-10"
+          className="glass rounded-2xl p-8 md:p-10"
         >
           <p className="text-lg leading-relaxed text-foreground/90">
             I&apos;m{" "}
@@ -41,7 +41,7 @@ export function AboutSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
-              className="glass rounded-2xl p-5 shadow-xl shadow-black/5"
+              className="glass rounded-2xl p-5"
             >
               <h3 className="font-display text-lg font-semibold text-foreground">
                 {pillar.title}

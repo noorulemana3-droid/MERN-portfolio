@@ -84,6 +84,7 @@ export type ContactFormData = {
   email: string;
   subject: string;
   message: string;
+  website?: string;
 };
 
 export type GithubRepo = {

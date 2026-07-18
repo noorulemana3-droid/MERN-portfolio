@@ -21,7 +21,7 @@ export function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.06 }}
-            className="glass rounded-2xl p-6 shadow-xl shadow-black/5 md:p-8"
+            className="glass rounded-2xl p-6 md:p-8"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
               <span>
@@ -39,7 +39,7 @@ export function ExperienceSection() {
               {item.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-border bg-background/40 px-3 py-1 text-xs text-muted"
+                  className="rounded-md border border-border bg-background/40 px-3 py-1 text-xs text-muted"
                 >
                   {tag}
                 </span>

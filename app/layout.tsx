@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Syne } from "next/font/google";
 import { AppProviders } from "@/providers/app-providers";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { ScrollProgress } from "@/components/common/scroll-progress";
-import { BackToTop } from "@/components/common/back-to-top";
-import { LoadingScreen } from "@/components/common/loading-screen";
-import { AiAssistant } from "@/components/ai/ai-assistant";
 import { SITE } from "@/data/portfolio";
 import "./globals.css";
 
@@ -66,15 +60,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${syne.variable} min-h-screen antialiased`}
       >
-        <AppProviders>
-          <LoadingScreen />
-          <ScrollProgress />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <AiAssistant />
-          <BackToTop />
-        </AppProviders>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

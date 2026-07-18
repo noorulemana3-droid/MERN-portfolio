@@ -8,10 +8,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variants = {
-  primary:
-    "gradient-btn text-white shadow-lg shadow-accent/20 hover:shadow-accent/30",
+  primary: "gradient-btn text-white",
   secondary:
-    "border border-border bg-card/70 text-foreground hover:border-accent/40 hover:text-accent",
+    "border border-border bg-card/80 text-foreground hover:border-accent/45 hover:text-accent",
   ghost: "bg-transparent text-foreground hover:bg-accent-soft",
 };
 

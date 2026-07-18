@@ -64,83 +64,85 @@ export function AiAssistant() {
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "fixed bottom-6 left-6 z-40 inline-flex items-center gap-2 rounded-full bg-accent px-4 py-3 text-sm font-medium text-white shadow-lg shadow-[var(--glow)] transition hover:opacity-90 focus-ring dark:text-[#07120e]",
-          open && "pointer-events-none opacity-0",
-        )}
-        aria-label="Open AI portfolio assistant"
-      >
-        <Bot className="h-4 w-4" />
-        Ask AI
-      </button>
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 px-4 pb-5 pt-0 sm:px-6 sm:pb-6">
+      <div className="pointer-events-auto ml-0 mr-auto w-fit max-w-full translate-y-0">
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-105 focus-ring dark:text-[#071018]",
+            open && "pointer-events-none absolute opacity-0",
+          )}
+          aria-label="Open AI portfolio assistant"
+        >
+          <Bot className="h-4 w-4" />
+          Ask AI
+        </button>
 
-      {open ? (
-        <div className="fixed bottom-6 left-6 z-50 flex h-[28rem] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-2xl">
-          <div className="flex items-center justify-between border-b border-border px-4 py-3">
-            <div>
-              <p className="text-sm font-semibold text-foreground">
-                AI Portfolio Assistant
-              </p>
-              <p className="text-xs text-muted">Powered by Gemini</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="rounded-lg p-2 hover:bg-accent-soft focus-ring"
-              aria-label="Close assistant"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="flex-1 space-y-3 overflow-y-auto p-4">
-            {messages.map((message, index) => (
-              <div
-                key={`${message.role}-${index}`}
-                className={cn(
-                  "max-w-[90%] rounded-2xl px-3 py-2 text-sm",
-                  message.role === "user"
-                    ? "ml-auto bg-accent text-white dark:text-[#07120e]"
-                    : "bg-accent-soft text-foreground",
-                )}
-              >
-                {message.content}
+        {open ? (
+          <div className="flex h-[min(28rem,calc(100dvh-5rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  Ask AI
+                </p>
+                <p className="text-xs text-muted">Portfolio assistant</p>
               </div>
-            ))}
-            {loading ? (
-              <p className="inline-flex items-center gap-2 text-xs text-muted">
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Thinking...
-              </p>
-            ) : null}
-          </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="rounded-lg p-2 hover:bg-accent-soft focus-ring"
+                aria-label="Close assistant"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
 
-          <form
-            onSubmit={sendMessage}
-            className="flex items-center gap-2 border-t border-border p-3"
-          >
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about projects..."
-              className="h-10 flex-1 rounded-xl border border-border bg-background px-3 text-sm focus-ring"
-              aria-label="Chat message"
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white disabled:opacity-50 dark:text-[#07120e] focus-ring"
-              aria-label="Send message"
+            <div className="flex-1 space-y-3 overflow-y-auto p-4">
+              {messages.map((message, index) => (
+                <div
+                  key={`${message.role}-${index}`}
+                  className={cn(
+                    "max-w-[90%] rounded-2xl px-3 py-2 text-sm",
+                    message.role === "user"
+                      ? "ml-auto bg-accent text-white dark:text-[#071018]"
+                      : "bg-accent-soft text-foreground",
+                  )}
+                >
+                  {message.content}
+                </div>
+              ))}
+              {loading ? (
+                <p className="inline-flex items-center gap-2 text-xs text-muted">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Thinking...
+                </p>
+              ) : null}
+            </div>
+
+            <form
+              onSubmit={sendMessage}
+              className="flex items-center gap-2 border-t border-border p-3"
             >
-              <Send className="h-4 w-4" />
-            </button>
-          </form>
-        </div>
-      ) : null}
-    </>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about projects..."
+                className="h-10 flex-1 rounded-xl border border-border bg-background px-3 text-sm focus-ring"
+                aria-label="Chat message"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white disabled:opacity-50 dark:text-[#071018] focus-ring"
+                aria-label="Send message"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            </form>
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
 }

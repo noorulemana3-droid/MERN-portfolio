@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, FileText, FolderGit2, Mail } from "lucide-react";
+import { Download, FolderGit2, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   HERO_ROLES,
@@ -46,26 +46,26 @@ export function HeroSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute left-[8%] top-[18%] h-64 w-64 rounded-full bg-accent/15 blur-3xl" />
-        <div className="absolute right-[6%] top-[28%] h-72 w-72 rounded-full bg-accent-secondary/15 blur-3xl" />
-        <div className="absolute bottom-[12%] left-[35%] h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute -left-24 top-24 h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute -right-16 top-40 h-[26rem] w-[26rem] rounded-full bg-accent-secondary/10 blur-3xl" />
+        <div className="animate-float-soft absolute bottom-16 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl" />
       </div>
 
-      <div className="container-narrow relative z-10 grid items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-24">
+      <div className="container-narrow relative z-10 grid items-center gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-8 lg:py-24">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-accent"
+            className="eyebrow eyebrow-line"
           >
             {SITE.subtitle}
           </motion.p>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
+            transition={{ delay: 0.06, duration: 0.55 }}
+            className="font-display text-5xl font-bold text-foreground sm:text-6xl md:text-7xl lg:text-[5.25rem] lg:leading-[0.95]"
           >
             {SITE.name}
           </motion.h1>
@@ -73,20 +73,20 @@ export function HeroSection() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 text-xl font-medium text-muted sm:text-2xl"
+            transition={{ delay: 0.12 }}
+            className="mt-5 text-xl font-medium text-muted sm:text-2xl"
           >
             I&apos;m a{" "}
             <span aria-live="polite">
-              <span className="gradient-text">{text}</span>
-              <span className="ml-0.5 inline-block h-[1.1em] w-[2px] animate-pulse bg-accent align-middle" />
+              <span className="gradient-text font-semibold">{text}</span>
+              <span className="ml-0.5 inline-block h-[1.05em] w-[2px] animate-pulse bg-accent align-middle" />
             </span>
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
+            transition={{ delay: 0.18 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
           >
             {SITE.tagline}
@@ -95,72 +95,67 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-8 flex flex-wrap gap-3"
+            transition={{ delay: 0.24 }}
+            className="mt-9 flex flex-wrap items-center gap-3"
           >
             <a
               href="#projects"
-              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold gradient-btn shadow-lg shadow-accent/20 transition duration-300 hover:shadow-accent/30"
+              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold gradient-btn transition duration-300"
             >
               <FolderGit2 className="h-4 w-4" />
               View Projects
             </a>
             <a
-              href="#resume"
-              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card/70 px-5 py-2.5 text-sm font-semibold text-foreground transition duration-300 hover:border-accent/40 hover:text-accent"
-            >
-              <FileText className="h-4 w-4" />
-              View Resume
-            </a>
-            <a
               href={SITE.resumePath}
               download
-              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card/70 px-5 py-2.5 text-sm font-semibold text-foreground transition duration-300 hover:border-accent/40 hover:text-accent"
+              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card/80 px-5 py-3 text-sm font-semibold text-foreground transition duration-300 hover:border-accent/45 hover:text-accent"
             >
               <Download className="h-4 w-4" />
               Download Resume
             </a>
             <a
               href="#contact"
-              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-muted transition duration-300 hover:text-foreground"
+              className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-muted transition duration-300 hover:text-foreground"
             >
               <Mail className="h-4 w-4" />
-              Contact Me
+              Contact
             </a>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-            className="mt-8"
+            transition={{ delay: 0.3 }}
+            className="mt-9"
           >
             <SocialIcons links={SOCIAL_LINKS} />
           </motion.div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          initial={{ opacity: 0, y: 28, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.22, duration: 0.65 }}
           className="relative"
         >
-          <div className="glass relative overflow-hidden rounded-3xl p-8 shadow-xl shadow-black/5 md:p-10">
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
-            <div className="absolute -bottom-12 -left-8 h-40 w-40 rounded-full bg-accent-secondary/20 blur-3xl" />
-            <p className="relative font-display text-2xl font-bold text-foreground">
+          <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-accent/15 via-transparent to-accent-secondary/15 blur-xl" />
+          <div className="glass relative overflow-hidden rounded-[1.75rem] p-8 md:p-10">
+            <div className="absolute right-0 top-0 h-px w-2/3 bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+            <p className="relative font-display text-2xl font-bold leading-snug text-foreground md:text-[1.7rem]">
               {SITE.panelTitle}
             </p>
-            <p className="relative mt-4 text-sm leading-relaxed text-muted">
+            <p className="relative mt-4 text-sm leading-relaxed text-muted md:text-[0.95rem]">
               {SITE.panelBody}
             </p>
-            <div className="relative mt-10 grid grid-cols-3 gap-4 border-t border-border pt-8">
+            <div className="relative mt-10 grid grid-cols-3 gap-4 border-t border-border/80 pt-8">
               {HERO_STATS.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+                  <p className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                     {stat.value}
                   </p>
-                  <p className="mt-1 text-sm text-muted">{stat.label}</p>
+                  <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-muted sm:text-xs">
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>

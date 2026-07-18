@@ -37,17 +37,17 @@ export function ProjectsSection() {
         description="Product-shaped builds across MERN, React, and Java — filter by focus area."
       />
 
-      <div className="mb-8 flex flex-wrap justify-center gap-2">
+      <div className="mb-10 flex flex-wrap justify-center gap-2">
         {FILTERS.map((item) => (
           <button
             key={item.id}
             type="button"
             onClick={() => setFilter(item.id)}
             className={cn(
-              "rounded-full border px-4 py-2 text-sm font-medium transition focus-ring",
+              "rounded-xl border px-4 py-2 text-sm font-medium transition focus-ring",
               filter === item.id
-                ? "border-transparent gradient-btn text-white shadow-md shadow-accent/20"
-                : "border-border bg-card/60 text-muted hover:border-accent/40 hover:text-foreground",
+                ? "border-transparent gradient-btn text-white"
+                : "border-border bg-card/70 text-muted hover:border-accent/40 hover:text-foreground",
             )}
           >
             {item.label}
@@ -63,7 +63,7 @@ export function ProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
-            className="group overflow-hidden rounded-2xl glass shadow-xl shadow-black/5"
+            className="group overflow-hidden rounded-2xl glass"
           >
             <div
               className="relative h-44"
@@ -97,7 +97,7 @@ export function ProjectsSection() {
                 {project.technologies.map((t) => (
                   <span
                     key={t}
-                    className="rounded-full border border-border px-2.5 py-1 text-[11px] text-muted"
+                    className="rounded-md border border-border bg-background/40 px-2.5 py-1 text-[11px] text-muted"
                   >
                     {t}
                   </span>

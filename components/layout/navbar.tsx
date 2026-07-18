@@ -48,23 +48,23 @@ export function Navbar() {
         <Link
           href="/#home"
           onClick={() => setOpen(false)}
-          className="focus-ring relative z-10 font-display text-lg font-bold tracking-tight text-foreground"
+          className="focus-ring relative z-10 font-display text-lg font-bold tracking-tight text-foreground transition hover:opacity-90"
         >
           {SITE.shortName}
           <span className="gradient-text">.</span>
         </Link>
 
-        <ul className="relative z-10 hidden items-center gap-1 lg:flex">
+        <ul className="relative z-10 hidden items-center gap-0.5 lg:flex">
           {NAV_ITEMS.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="focus-ring group relative z-10 inline-flex rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors duration-200 hover:bg-card/80 hover:text-foreground"
+                className="focus-ring group relative z-10 inline-flex rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors duration-200 hover:text-foreground"
               >
                 <span className="relative z-10">{item.label}</span>
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-2 -bottom-0.5 z-0 h-0.5 origin-left scale-x-0 rounded-full bg-accent/60 transition-transform duration-200 group-hover:scale-x-100"
+                  className="pointer-events-none absolute inset-x-3 -bottom-0.5 z-0 h-px origin-left scale-x-0 bg-gradient-to-r from-accent to-accent-secondary transition-transform duration-300 group-hover:scale-x-100"
                 />
               </Link>
             </li>

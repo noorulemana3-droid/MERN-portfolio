@@ -20,11 +20,16 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+        <p
+          className={cn(
+            "eyebrow",
+            align === "center" ? "justify-center" : "eyebrow-line",
+          )}
+        >
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+      <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
         {title}
       </h2>
       {description ? (
@@ -32,6 +37,12 @@ export function SectionHeading({
           {description}
         </p>
       ) : null}
+      <div
+        className={cn(
+          "mt-6 h-px w-16 bg-gradient-to-r from-accent via-accent-secondary to-transparent",
+          align === "center" && "mx-auto",
+        )}
+      />
     </div>
   );
 }
