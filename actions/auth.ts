@@ -62,75 +62,86 @@ export async function loginAction(
     const captcha = await verifyRecaptchaToken(
       parsed.data.captchaToken ?? "",
       "login",
+      ip,
     );
     if (!captcha.ok) {
-      const afterFail = recordLoginFailure(rateKey);
+      // Don't burn login attempts on captcha/config issues
       return {
         ok: false,
         code: "CAPTCHA",
         error: captcha.error,
+        attemptsRemaining: limit.attemptsRemaining,
+      };
+    }
+  }
+
+  try {
+    const admin = await prisma.admin.findUnique({
+      where: { email },
+    });
+
+    if (!admin) {
+      const afterFail = recordLoginFailure(rateKey);
+      if (afterFail.blocked) {
+        return {
+          ok: false,
+          code: "RATE_LIMITED",
+          error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
+          retryAfterSeconds: afterFail.retryAfterSeconds,
+          attemptsRemaining: 0,
+        };
+      }
+      return {
+        ok: false,
+        code: "AUTH",
+        error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
         attemptsRemaining: afterFail.attemptsRemaining,
-        retryAfterSeconds: afterFail.retryAfterSeconds || undefined,
       };
     }
-  }
 
-  const admin = await prisma.admin.findUnique({
-    where: { email },
-  });
+    const valid = await verifyPassword(
+      parsed.data.password,
+      admin.passwordHash,
+    );
 
-  if (!admin) {
-    const afterFail = recordLoginFailure(rateKey);
-    if (afterFail.blocked) {
+    if (!valid) {
+      const afterFail = recordLoginFailure(rateKey);
+      if (afterFail.blocked) {
+        return {
+          ok: false,
+          code: "RATE_LIMITED",
+          error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
+          retryAfterSeconds: afterFail.retryAfterSeconds,
+          attemptsRemaining: 0,
+        };
+      }
       return {
         ok: false,
-        code: "RATE_LIMITED",
-        error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
-        retryAfterSeconds: afterFail.retryAfterSeconds,
-        attemptsRemaining: 0,
+        code: "AUTH",
+        error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
+        attemptsRemaining: afterFail.attemptsRemaining,
       };
     }
+
+    clearLoginRateLimit(rateKey);
+
+    await setAdminSession({
+      sub: admin.id,
+      email: admin.email,
+      name: admin.name,
+    });
+
+    return { ok: true };
+  } catch (error) {
+    console.error("loginAction database error:", error);
     return {
       ok: false,
       code: "AUTH",
-      error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
-      attemptsRemaining: afterFail.attemptsRemaining,
+      error:
+        "Unable to reach the database. Please try again in a moment.",
+      attemptsRemaining: limit.attemptsRemaining,
     };
   }
-
-  const valid = await verifyPassword(
-    parsed.data.password,
-    admin.passwordHash,
-  );
-
-  if (!valid) {
-    const afterFail = recordLoginFailure(rateKey);
-    if (afterFail.blocked) {
-      return {
-        ok: false,
-        code: "RATE_LIMITED",
-        error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
-        retryAfterSeconds: afterFail.retryAfterSeconds,
-        attemptsRemaining: 0,
-      };
-    }
-    return {
-      ok: false,
-      code: "AUTH",
-      error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
-      attemptsRemaining: afterFail.attemptsRemaining,
-    };
-  }
-
-  clearLoginRateLimit(rateKey);
-
-  await setAdminSession({
-    sub: admin.id,
-    email: admin.email,
-    name: admin.name,
-  });
-
-  return { ok: true };
 }
 
 export async function logoutAction() {

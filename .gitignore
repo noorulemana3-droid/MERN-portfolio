@@ -43,3 +43,7 @@ next-env.d.ts
 # supabase local temp
 supabase/.temp/
 
+.vercel
+.env
+.env.*
+!.env.example

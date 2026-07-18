@@ -15,7 +15,7 @@ const defaultValues: ContactInput = {
   email: "",
   subject: "",
   message: "",
-  website: "",
+  companyFax: "",
 };
 
 type ContactFormProps = {
@@ -40,13 +40,18 @@ export function ContactForm({ className }: ContactFormProps) {
     mode: "onChange",
   });
 
-  // Clear success/error once the user starts editing again
+  // Clear feedback only when the user edits after a result.
+  // Do not depend on `status` — that raced with reset() and wiped the
+  // success banner while the form was still dirty.
   useEffect(() => {
-    if (!isDirty || status === "idle") return;
-    setStatus("idle");
-    setServerMessage("");
-    setEmailHint("");
-  }, [isDirty, status]);
+    if (!isDirty) return;
+    setStatus((current) => {
+      if (current === "idle") return current;
+      setServerMessage("");
+      setEmailHint("");
+      return "idle";
+    });
+  }, [isDirty]);
 
   const watched = watch(["name", "email", "subject", "message"]);
   const filledCount = watched.filter((value) => Boolean(value?.trim())).length;
@@ -66,6 +71,8 @@ export function ContactForm({ className }: ContactFormProps) {
           return;
         }
 
+        reset(defaultValues);
+
         setStatus("success");
         setServerMessage(result.message);
 
@@ -76,8 +83,6 @@ export function ContactForm({ className }: ContactFormProps) {
         } else if (result.emails.confirmationSent) {
           setEmailHint("A confirmation email was sent to you.");
         }
-
-        reset(defaultValues);
       } catch {
         setStatus("error");
         setServerMessage("Unable to send message. Please try again.");
@@ -139,18 +144,18 @@ export function ContactForm({ className }: ContactFormProps) {
         />
       </fieldset>
 
-      {/* Honeypot — hidden from users, visible to bots */}
+      {/* Honeypot — hidden from users; obscure name avoids browser autofill */}
       <div
         className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
         aria-hidden="true"
       >
-        <label htmlFor="website">Website</label>
+        <label htmlFor="companyFax">Company fax</label>
         <input
-          id="website"
+          id="companyFax"
           type="text"
           tabIndex={-1}
           autoComplete="off"
-          {...register("website")}
+          {...register("companyFax")}
         />
       </div>
 

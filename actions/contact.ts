@@ -33,8 +33,9 @@ export async function submitContact(
     };
   }
 
-  // Honeypot — bots often fill hidden fields; humans leave this empty
-  if (parsed.data.website?.trim()) {
+  // Honeypot — bots fill hidden fields; humans leave this empty.
+  // Still return a bland success so scrapers think it worked.
+  if (parsed.data.companyFax?.trim()) {
     return {
       ok: true,
       stored: true,

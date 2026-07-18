@@ -21,8 +21,12 @@ export const contactSchema = z.object({
     .trim()
     .min(10, "Message must be at least 10 characters")
     .max(2000, "Message is too long"),
-  /** Honeypot — must stay empty. Not stored in the database. */
-  website: z.string().max(200).optional(),
+  /**
+   * Honeypot — must stay empty. Not stored in the database.
+   * Avoid names like "website"/"url" — browsers autofill them and
+   * cause false "success" without saving the message.
+   */
+  companyFax: z.string().max(200).optional(),
 });
 
 export const chatbotSchema = z.object({
