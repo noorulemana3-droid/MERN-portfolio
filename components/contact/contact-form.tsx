@@ -103,13 +103,17 @@ export function ContactForm({ className }: ContactFormProps) {
       setStatus("success");
       setServerMessage(payload.message);
 
-      if (payload.emails.ownerAlertSent && payload.emails.confirmationSent) {
-        setEmailHint("Alert sent to me — check your inbox for a confirmation.");
-      } else if (payload.emails.ownerAlertSent) {
-        setEmailHint("I was notified by email about your message.");
-      } else if (payload.emails.confirmationSent) {
-        setEmailHint("A confirmation email was sent to you.");
-      }
+        if (payload.emails.ownerAlertSent && payload.emails.confirmationSent) {
+          setEmailHint("Alert sent to me — check your inbox for a confirmation.");
+        } else if (payload.emails.ownerAlertSent) {
+          setEmailHint("I was notified by email about your message.");
+        } else if (payload.emails.confirmationSent) {
+          setEmailHint("A confirmation email was sent to you.");
+        } else {
+          setEmailHint(
+            "Saved in the dashboard. Email alert may be delayed — check spam or Resend.",
+          );
+        }
 
       window.setTimeout(() => {
         ignoreDirtyClear.current = false;

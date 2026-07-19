@@ -12,6 +12,7 @@ export type SubmitContactResult =
       emails: {
         ownerAlertSent: boolean;
         confirmationSent: boolean;
+        ownerError?: string;
       };
     }
   | {
@@ -63,19 +64,27 @@ export async function submitContact(
       };
     }
 
-    const { ownerAlertSent, confirmationSent } = saved.emails;
-    const message =
-      ownerAlertSent || confirmationSent
-        ? "Message sent successfully. A confirmation email is on the way."
-        : "Message saved successfully. I'll get back to you soon.";
+  const { ownerAlertSent, confirmationSent, ownerError } = saved.emails;
+  let message =
+    ownerAlertSent || confirmationSent
+      ? "Message sent successfully. A confirmation email is on the way."
+      : "Message saved successfully. I'll get back to you soon.";
 
-    return {
-      ok: true,
-      stored: true,
-      id: saved.id,
-      message,
-      emails: saved.emails,
-    };
+  if (!ownerAlertSent) {
+    message =
+      "Message saved to the database, but the email notification could not be sent. I'll still see it in the admin dashboard.";
+    if (ownerError) {
+      console.error("[contact] owner email error detail:", ownerError);
+    }
+  }
+
+  return {
+    ok: true,
+    stored: true,
+    id: saved.id,
+    message,
+    emails: saved.emails,
+  };
   } catch (error) {
     console.error(
       "[contact] submitContact failed:",

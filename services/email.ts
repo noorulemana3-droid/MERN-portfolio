@@ -27,11 +27,30 @@ function getOwnerInbox() {
   return (process.env.CONTACT_EMAIL_TO?.trim() || SITE.email).toLowerCase();
 }
 
+/**
+ * Resend free tier requires onboarding@resend.dev (or a verified domain).
+ * Unquoted env values like `Portfolio <onboarding@...>` often get truncated
+ * to just `Portfolio` on some hosts — detect and fall back.
+ */
 function getFromAddress() {
-  return (
-    process.env.CONTACT_EMAIL_FROM?.trim() ||
-    `${SITE.name} Portfolio <onboarding@resend.dev>`
-  );
+  const configured = process.env.CONTACT_EMAIL_FROM?.trim();
+  const fallback = `${SITE.name} Portfolio <onboarding@resend.dev>`;
+
+  if (!configured) return fallback;
+
+  // Must look like "Name <email@domain>" or a bare email
+  const looksValid =
+    /^.+\s<[^>]+@[^>]+>$/.test(configured) ||
+    /^[^<>\s]+@[^<>\s]+$/.test(configured);
+
+  if (!looksValid) {
+    console.warn(
+      `[email] CONTACT_EMAIL_FROM looks invalid ("${configured}"). Using ${fallback}`,
+    );
+    return fallback;
+  }
+
+  return configured;
 }
 
 export function isResendConfigured() {
@@ -41,6 +60,7 @@ export function isResendConfigured() {
 export type ContactEmailResult = {
   ownerAlertSent: boolean;
   confirmationSent: boolean;
+  ownerError?: string;
 };
 
 /**
@@ -55,7 +75,11 @@ export async function sendContactEmails(
   const resend = getResendClient();
   if (!resend) {
     console.warn("[email] RESEND_API_KEY missing — skipping contact alerts");
-    return { ownerAlertSent: false, confirmationSent: false };
+    return {
+      ownerAlertSent: false,
+      confirmationSent: false,
+      ownerError: "RESEND_API_KEY missing",
+    };
   }
 
   const from = getFromAddress();
@@ -67,6 +91,8 @@ export async function sendContactEmails(
     subject: escapeHtml(input.subject),
     message: escapeHtml(input.message).replaceAll("\n", "<br />"),
   };
+
+  console.info("[email] sending owner alert", { from, to: owner, contactId });
 
   const ownerHtml = `
     <div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.5;color:#111">
@@ -82,10 +108,9 @@ export async function sendContactEmails(
     </div>
   `;
 
-  // 1) Always notify the owner (this is the important alert)
   const ownerResult = await resend.emails.send({
     from,
-    to: owner,
+    to: [owner],
     replyTo: input.email,
     subject: `New contact: ${input.subject}`,
     html: ownerHtml,
@@ -93,22 +118,31 @@ export async function sendContactEmails(
   });
 
   const ownerAlertSent = !ownerResult.error;
+  let ownerError: string | undefined;
   if (!ownerAlertSent) {
-    console.error("[email] owner alert failed:", ownerResult.error);
+    ownerError =
+      typeof ownerResult.error === "object" &&
+      ownerResult.error &&
+      "message" in ownerResult.error
+        ? String((ownerResult.error as { message?: string }).message)
+        : JSON.stringify(ownerResult.error);
+    console.error("[email] owner alert failed:", ownerResult.error, {
+      from,
+      to: owner,
+    });
+  } else {
+    console.info("[email] owner alert sent", { id: ownerResult.data?.id });
   }
 
-  // 2) Confirmation to visitor — only if Resend testing rules allow it
-  //    (free plan with onboarding@resend.dev can only email your own address)
   let confirmationSent = false;
   const canEmailVisitor =
     process.env.RESEND_SEND_CONFIRMATIONS === "true" ||
     submitter === owner;
 
   if (canEmailVisitor && submitter !== owner) {
-    // Domain verified mode: try sending to visitor
     const confirmationResult = await resend.emails.send({
       from,
-      to: input.email,
+      to: [input.email],
       subject: `Thanks for contacting ${SITE.name}`,
       html: `
         <div style="font-family:Segoe UI,Arial,sans-serif;line-height:1.5;color:#111">
@@ -126,13 +160,8 @@ export async function sendContactEmails(
       console.error("[email] confirmation failed:", confirmationResult.error);
     }
   } else if (submitter === owner) {
-    // Same inbox — no second email needed; owner alert already covers it
     confirmationSent = ownerAlertSent;
-  } else {
-    console.info(
-      "[email] skipped visitor confirmation (Resend free plan only emails your own address). Owner alert still sent.",
-    );
   }
 
-  return { ownerAlertSent, confirmationSent };
+  return { ownerAlertSent, confirmationSent, ownerError };
 }
