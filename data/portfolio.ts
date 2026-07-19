@@ -217,7 +217,7 @@ export const PROJECTS: Project[] = [
     filters: ["mern", "react", "backend"],
     featured: true,
     githubUrl:
-      "https://github.com/noorulemana3-droid/Portfolio--MERN-Stack-Developer-Intern",
+      "https://github.com/noorulemana3-droid/MERN-portfolio",
     year: 2026,
   },
   {
