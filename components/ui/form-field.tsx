@@ -1,4 +1,9 @@
-import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type TextareaHTMLAttributes,
+} from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -24,7 +29,11 @@ export function FormField({
         {label}
       </label>
       {children}
-      {error ? <p className="mt-1 text-xs text-danger">{error}</p> : null}
+      {error ? (
+        <p id={`${id}-error`} className="mt-1 text-xs text-danger">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -36,25 +45,22 @@ type TextFieldProps = {
   className?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function TextInput({
-  id,
-  label,
-  error,
-  className,
-  ...props
-}: TextFieldProps) {
-  return (
-    <FormField id={id} label={label} error={error} className={className}>
-      <Input
-        id={id}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className={cn(error && "border-danger/60")}
-        {...props}
-      />
-    </FormField>
-  );
-}
+export const TextInput = forwardRef<HTMLInputElement, TextFieldProps>(
+  function TextInput({ id, label, error, className, ...props }, ref) {
+    return (
+      <FormField id={id} label={label} error={error} className={className}>
+        <Input
+          ref={ref}
+          id={id}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className={cn(error && "border-danger/60")}
+          {...props}
+        />
+      </FormField>
+    );
+  },
+);
 
 type TextAreaProps = {
   id: string;
@@ -63,22 +69,19 @@ type TextAreaProps = {
   className?: string;
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export function TextTextarea({
-  id,
-  label,
-  error,
-  className,
-  ...props
-}: TextAreaProps) {
-  return (
-    <FormField id={id} label={label} error={error} className={className}>
-      <Textarea
-        id={id}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className={cn(error && "border-danger/60")}
-        {...props}
-      />
-    </FormField>
-  );
-}
+export const TextTextarea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  function TextTextarea({ id, label, error, className, ...props }, ref) {
+    return (
+      <FormField id={id} label={label} error={error} className={className}>
+        <Textarea
+          ref={ref}
+          id={id}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className={cn(error && "border-danger/60")}
+          {...props}
+        />
+      </FormField>
+    );
+  },
+);

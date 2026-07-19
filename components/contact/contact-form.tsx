@@ -2,9 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, Loader2, Mail, Send } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { submitContact } from "@/actions/contact";
 import { Button } from "@/components/ui/button";
 import { TextInput, TextTextarea } from "@/components/ui/form-field";
 import { cn } from "@/lib/utils";
@@ -22,78 +21,112 @@ type ContactFormProps = {
   className?: string;
 };
 
+type ApiSuccess = {
+  message: string;
+  stored: true;
+  id: string;
+  emails: {
+    ownerAlertSent: boolean;
+    confirmationSent: boolean;
+  };
+};
+
+type ApiError = {
+  error: string;
+};
+
 export function ContactForm({ className }: ContactFormProps) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [serverMessage, setServerMessage] = useState("");
   const [emailHint, setEmailHint] = useState("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
+  const ignoreDirtyClear = useRef(false);
 
   const {
     register,
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
     defaultValues,
-    mode: "onChange",
+    mode: "onSubmit",
   });
-
-  // Clear feedback only when the user edits after a result.
-  // Do not depend on `status` — that raced with reset() and wiped the
-  // success banner while the form was still dirty.
-  useEffect(() => {
-    if (!isDirty) return;
-    setStatus((current) => {
-      if (current === "idle") return current;
-      setServerMessage("");
-      setEmailHint("");
-      return "idle";
-    });
-  }, [isDirty]);
 
   const watched = watch(["name", "email", "subject", "message"]);
   const filledCount = watched.filter((value) => Boolean(value?.trim())).length;
 
-  const onSubmit = (values: ContactInput) => {
+  const clearFeedbackOnEdit = () => {
+    if (ignoreDirtyClear.current) return;
+    if (status === "idle") return;
     setStatus("idle");
     setServerMessage("");
     setEmailHint("");
+  };
 
-    startTransition(async () => {
-      try {
-        const result = await submitContact(values);
+  const onSubmit = async (values: ContactInput) => {
+    setStatus("idle");
+    setServerMessage("");
+    setEmailHint("");
+    setIsPending(true);
 
-        if (!result.ok) {
-          setStatus("error");
-          setServerMessage(result.error);
-          return;
-        }
+    try {
+      // Always send an empty honeypot from the real UI so browser autofill
+      // cannot trigger a fake "success" without saving.
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          subject: values.subject,
+          message: values.message,
+          companyFax: "",
+        }),
+      });
 
-        reset(defaultValues);
+      const payload = (await response.json()) as ApiSuccess | ApiError;
 
-        setStatus("success");
-        setServerMessage(result.message);
-
-        if (result.emails.ownerAlertSent && result.emails.confirmationSent) {
-          setEmailHint("Alert sent to me — check your inbox for a confirmation.");
-        } else if (result.emails.ownerAlertSent) {
-          setEmailHint("I was notified by email about your message.");
-        } else if (result.emails.confirmationSent) {
-          setEmailHint("A confirmation email was sent to you.");
-        }
-      } catch {
+      if (!response.ok || !("stored" in payload) || !payload.stored) {
         setStatus("error");
-        setServerMessage("Unable to send message. Please try again.");
+        setServerMessage(
+          "error" in payload && payload.error
+            ? payload.error
+            : "Could not save your message. Please try again.",
+        );
+        return;
       }
-    });
+
+      ignoreDirtyClear.current = true;
+      reset(defaultValues);
+      setStatus("success");
+      setServerMessage(payload.message);
+
+      if (payload.emails.ownerAlertSent && payload.emails.confirmationSent) {
+        setEmailHint("Alert sent to me — check your inbox for a confirmation.");
+      } else if (payload.emails.ownerAlertSent) {
+        setEmailHint("I was notified by email about your message.");
+      } else if (payload.emails.confirmationSent) {
+        setEmailHint("A confirmation email was sent to you.");
+      }
+
+      window.setTimeout(() => {
+        ignoreDirtyClear.current = false;
+      }, 300);
+    } catch {
+      setStatus("error");
+      setServerMessage("Unable to send message. Please try again.");
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={cn(className)}
+      onChange={clearFeedbackOnEdit}
+      className={cn("relative", className)}
       noValidate
     >
       <div className="mb-4 flex items-center justify-between gap-3 text-xs text-muted">
@@ -130,6 +163,7 @@ export function ContactForm({ className }: ContactFormProps) {
           label="Subject"
           className="mt-4"
           placeholder="Internship opportunity"
+          autoComplete="off"
           error={errors.subject?.message}
           {...register("subject")}
         />
@@ -144,9 +178,9 @@ export function ContactForm({ className }: ContactFormProps) {
         />
       </fieldset>
 
-      {/* Honeypot — hidden from users; obscure name avoids browser autofill */}
+      {/* Honeypot for API/bot posts only — never submitted as filled from this UI */}
       <div
-        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        className="pointer-events-none absolute -left-[9999px] h-0 w-0 overflow-hidden opacity-0"
         aria-hidden="true"
       >
         <label htmlFor="companyFax">Company fax</label>

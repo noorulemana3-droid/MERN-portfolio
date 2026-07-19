@@ -33,8 +33,8 @@ export async function submitContact(
     };
   }
 
-  // Honeypot — bots fill hidden fields; humans leave this empty.
-  // Still return a bland success so scrapers think it worked.
+  // Honeypot — bots that POST a filled field are ignored.
+  // The real contact form always sends companyFax as "".
   if (parsed.data.companyFax?.trim()) {
     return {
       ok: true,
@@ -45,34 +45,46 @@ export async function submitContact(
     };
   }
 
-  const contactData = {
-    name: parsed.data.name,
-    email: parsed.data.email,
-    subject: parsed.data.subject,
-    message: parsed.data.message,
-  };
+  try {
+    const contactData = {
+      name: parsed.data.name,
+      email: parsed.data.email,
+      subject: parsed.data.subject,
+      message: parsed.data.message,
+    };
 
-  const saved = await saveContactMessage(contactData);
+    const saved = await saveContactMessage(contactData);
 
-  if (!saved.ok) {
+    if (!saved.ok) {
+      return {
+        ok: false,
+        code: saved.code,
+        error: saved.error,
+      };
+    }
+
+    const { ownerAlertSent, confirmationSent } = saved.emails;
+    const message =
+      ownerAlertSent || confirmationSent
+        ? "Message sent successfully. A confirmation email is on the way."
+        : "Message saved successfully. I'll get back to you soon.";
+
+    return {
+      ok: true,
+      stored: true,
+      id: saved.id,
+      message,
+      emails: saved.emails,
+    };
+  } catch (error) {
+    console.error(
+      "[contact] submitContact failed:",
+      error instanceof Error ? error.message : error,
+    );
     return {
       ok: false,
-      code: saved.code,
-      error: saved.error,
+      code: "INSERT_FAILED",
+      error: "Could not save your message. Please try again later.",
     };
   }
-
-  const { ownerAlertSent, confirmationSent } = saved.emails;
-  const message =
-    ownerAlertSent || confirmationSent
-      ? "Message sent successfully. A confirmation email is on the way."
-      : "Message saved successfully. I'll get back to you soon.";
-
-  return {
-    ok: true,
-    stored: true,
-    id: saved.id,
-    message,
-    emails: saved.emails,
-  };
 }
