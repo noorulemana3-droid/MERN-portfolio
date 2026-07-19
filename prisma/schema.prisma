@@ -9,16 +9,27 @@ datasource db {
 }
 
 /// Portfolio contact form submissions
+enum ContactStatus {
+  Pending
+  Reviewed
+  Resolved
+
+  @@map("contact_status")
+}
+
 model Contact {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name      String
   email     String
   subject   String
   message   String
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  status    ContactStatus @default(Pending)
+  createdAt DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([createdAt(sort: Desc)], map: "contacts_created_at_idx")
   @@index([email], map: "contacts_email_idx")
+  @@index([status], map: "contacts_status_idx")
   @@map("contacts")
 }
 

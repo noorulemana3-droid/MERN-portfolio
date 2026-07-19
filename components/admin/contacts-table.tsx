@@ -4,8 +4,21 @@ type ContactRow = {
   email: string;
   subject: string;
   message: string;
+  status: "Pending" | "Reviewed" | "Resolved";
   createdAt: Date;
+  updatedAt: Date;
 };
+
+function statusClass(status: ContactRow["status"]) {
+  switch (status) {
+    case "Reviewed":
+      return "bg-sky-500/15 text-sky-700 dark:text-sky-300";
+    case "Resolved":
+      return "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300";
+    default:
+      return "bg-amber-500/15 text-amber-800 dark:text-amber-200";
+  }
+}
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
   return (
@@ -18,6 +31,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
               <th className="px-4 py-3 font-semibold">Email</th>
               <th className="px-4 py-3 font-semibold">Subject</th>
               <th className="px-4 py-3 font-semibold">Message</th>
+              <th className="px-4 py-3 font-semibold">Status</th>
               <th className="px-4 py-3 font-semibold">Date</th>
             </tr>
           </thead>
@@ -42,6 +56,13 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
                   <p className="line-clamp-3 whitespace-pre-wrap">
                     {contact.message}
                   </p>
+                </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${statusClass(contact.status)}`}
+                  >
+                    {contact.status}
+                  </span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-xs text-muted">
                   {contact.createdAt.toLocaleString()}
