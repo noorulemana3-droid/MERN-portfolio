@@ -24,11 +24,14 @@ model Contact {
 
 /// Dashboard admin users
 model Admin {
-  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email        String   @unique
-  name         String
-  passwordHash String   @map("password_hash")
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email          String    @unique
+  name           String
+  passwordHash   String    @map("password_hash")
+  totpSecret     String?   @map("totp_secret")
+  totpEnabled    Boolean   @default(false) @map("totp_enabled")
+  totpVerifiedAt DateTime? @map("totp_verified_at") @db.Timestamptz(6)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@map("admins")
 }

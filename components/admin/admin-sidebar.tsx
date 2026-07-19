@@ -7,6 +7,7 @@ import {
   LogOut,
   Mail,
   Menu,
+  Shield,
   X,
   ExternalLink,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import { Button } from "@/components/ui/button";
 const NAV = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/contacts", label: "Contacts", icon: Mail },
+  { href: "/dashboard/security", label: "Security", icon: Shield },
 ];
 
 export function AdminSidebar({ adminName }: { adminName: string }) {

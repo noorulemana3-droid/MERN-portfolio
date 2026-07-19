@@ -92,3 +92,8 @@ export function buildLoginRateLimitKey(ip: string, email?: string) {
   const safeEmail = email?.trim().toLowerCase();
   return safeEmail ? `${safeIp}:${safeEmail}` : safeIp;
 }
+
+/** Rate-limit key for TOTP verification attempts. */
+export function buildTotpRateLimitKey(ip: string, email: string) {
+  return `totp:${buildLoginRateLimitKey(ip, email)}`;
+}

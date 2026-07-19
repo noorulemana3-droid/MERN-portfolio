@@ -49,6 +49,36 @@ export const loginSchema = z.object({
   captchaToken: z.string().optional(),
 });
 
+export const totpCodeSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Enter the 6-digit authenticator code"),
+  pendingToken: z.string().min(1, "Login session expired. Sign in again."),
+});
+
+export const totpEnableConfirmSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Enter the 6-digit authenticator code"),
+  setupToken: z.string().min(1, "Setup session expired. Start again."),
+});
+
+export const totpDisableSchema = z.object({
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(128, "Password is too long"),
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, "Enter the 6-digit authenticator code"),
+});
+
 export type ContactInput = z.infer<typeof contactSchema>;
 export type ChatbotInput = z.infer<typeof chatbotSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type TotpCodeInput = z.infer<typeof totpCodeSchema>;
+export type TotpEnableConfirmInput = z.infer<typeof totpEnableConfirmSchema>;
+export type TotpDisableInput = z.infer<typeof totpDisableSchema>;
