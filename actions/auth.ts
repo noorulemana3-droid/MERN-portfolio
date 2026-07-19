@@ -56,7 +56,8 @@ function authFail(
     return {
       ok: false,
       code: "RATE_LIMITED",
-      error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
+      error:
+        "Too many login attempts from your network. For your security, sign-in is paused. Please try again in a few minutes.",
       retryAfterSeconds: afterFail.retryAfterSeconds,
       attemptsRemaining: 0,
     };
@@ -83,14 +84,16 @@ export async function loginAction(
 
   const email = parsed.data.email.trim().toLowerCase();
   const ip = await getClientIp();
-  const rateKey = buildLoginRateLimitKey(ip, email);
+  // Task 7: rate-limit by IP (5 failed attempts → temporary lockout)
+  const rateKey = buildLoginRateLimitKey(ip);
 
   const limit = assertLoginAllowed(rateKey);
   if (limit.blocked) {
     return {
       ok: false,
       code: "RATE_LIMITED",
-      error: `Too many failed attempts. Try again in ${limit.retryAfterSeconds}s.`,
+      error:
+        "Too many login attempts from your network. For your security, sign-in is paused. Please try again in a few minutes.",
       retryAfterSeconds: limit.retryAfterSeconds,
       attemptsRemaining: 0,
     };
@@ -113,10 +116,11 @@ export async function loginAction(
   }
 
   if (!isSupabaseAuthConfigured()) {
+    console.error("[login] Supabase Auth env not configured");
     return {
       ok: false,
       code: "AUTH",
-      error: "Authentication is not configured. Missing Supabase credentials.",
+      error: "Sign-in is temporarily unavailable. Please try again later.",
       attemptsRemaining: limit.attemptsRemaining,
     };
   }
@@ -206,7 +210,8 @@ export async function verifyTotpAction(
     return {
       ok: false,
       code: "RATE_LIMITED",
-      error: `Too many failed 2FA attempts. Try again in ${limit.retryAfterSeconds}s.`,
+      error:
+        "Too many authenticator attempts. For your security, verification is paused. Please try again in a few minutes.",
       retryAfterSeconds: limit.retryAfterSeconds,
       attemptsRemaining: 0,
     };
@@ -238,7 +243,8 @@ export async function verifyTotpAction(
         return {
           ok: false,
           code: "RATE_LIMITED",
-          error: `Too many failed 2FA attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
+          error:
+            "Too many authenticator attempts. For your security, verification is paused. Please try again in a few minutes.",
           retryAfterSeconds: afterFail.retryAfterSeconds,
           attemptsRemaining: 0,
         };

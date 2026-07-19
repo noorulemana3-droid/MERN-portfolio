@@ -86,14 +86,14 @@ export function clearLoginRateLimit(key: string) {
   store.delete(key);
 }
 
-/** Build a stable rate-limit key from IP (+ optional email). */
-export function buildLoginRateLimitKey(ip: string, email?: string) {
-  const safeIp = ip.trim() || "unknown";
-  const safeEmail = email?.trim().toLowerCase();
-  return safeEmail ? `${safeIp}:${safeEmail}` : safeIp;
+/** Build an IP-based rate-limit key (Task 7). */
+export function buildLoginRateLimitKey(ip: string, _email?: string) {
+  return (ip.trim() || "unknown").toLowerCase();
 }
 
-/** Rate-limit key for TOTP verification attempts. */
+/** Rate-limit key for TOTP verification attempts (IP + account). */
 export function buildTotpRateLimitKey(ip: string, email: string) {
-  return `totp:${buildLoginRateLimitKey(ip, email)}`;
+  const safeIp = (ip.trim() || "unknown").toLowerCase();
+  const safeEmail = email.trim().toLowerCase();
+  return `totp:${safeIp}:${safeEmail}`;
 }

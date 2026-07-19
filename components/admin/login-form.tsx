@@ -201,11 +201,11 @@ export function LoginForm({
             Temporarily locked
           </p>
           <p className="mt-1 text-danger/90">
-            Too many failed attempts. Try again in{" "}
+            Too many login attempts from your network. Sign-in is paused for{" "}
             <span className="font-semibold tabular-nums">
               {formatCountdown(lockSeconds)}
             </span>
-            .
+            . This helps keep the admin area secure.
           </p>
         </div>
       ) : null}
