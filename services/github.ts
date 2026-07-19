@@ -10,13 +10,13 @@ export async function fetchGithubDashboard(username = SITE.githubUsername) {
   const [profileRes, reposRes] = await Promise.all([
     fetch(`https://api.github.com/users/${username}`, {
       headers,
-      next: { revalidate: 3600 },
+      next: { revalidate: 300 },
     }),
     fetch(
       `https://api.github.com/users/${username}/repos?sort=updated&per_page=10`,
       {
         headers,
-        next: { revalidate: 3600 },
+        next: { revalidate: 300 },
       },
     ),
   ]);

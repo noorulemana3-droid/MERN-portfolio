@@ -200,24 +200,24 @@ export const SKILLS = SKILL_GROUPS.flatMap((group) =>
 export const PROJECTS: Project[] = [
   {
     id: "portfolio-mern-stack-developer-intern",
-    title: "Portfolio - MERN Stack Developer Intern",
+    title: "MERN Portfolio",
     description:
       "A modern developer portfolio showcasing skills, projects, experience, and a functional contact system.",
     longDescription:
-      "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, and Contact Us flows designed for recruiters.",
+      "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, admin dashboard with 2FA, and Contact Us flows designed for recruiters.",
     image: "/images/projects/portfolio.svg",
     technologies: [
       "Next.js",
       "TypeScript",
       "Tailwind CSS",
       "Supabase",
+      "Prisma",
       "Framer Motion",
       "Vercel",
     ],
     filters: ["mern", "react", "backend"],
     featured: true,
-    githubUrl:
-      "https://github.com/noorulemana3-droid/MERN-portfolio",
+    githubUrl: "https://github.com/noorulemana3-droid/MERN-portfolio",
     year: 2026,
   },
   {
