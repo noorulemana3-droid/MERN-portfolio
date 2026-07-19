@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { href: "/dashboard/contacts", label: "Contacts", icon: Mail },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/contacts", label: "Contact Queries", icon: Mail },
   { href: "/dashboard/security", label: "Security", icon: Shield },
 ];
 

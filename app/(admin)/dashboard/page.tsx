@@ -1,25 +1,36 @@
 import Link from "next/link";
-import { ArrowRight, Mail, MessageSquareText, Users } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Clock3,
+  Mail,
+} from "lucide-react";
 import { requireAdmin } from "@/lib/auth/guards";
 import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
   await requireAdmin();
 
-  const [totalContacts, latestContacts] = await Promise.all([
-    prisma.contact.count(),
-    prisma.contact.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 5,
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        subject: true,
-        createdAt: true,
-      },
-    }),
-  ]);
+  const [totalContacts, pendingContacts, resolvedContacts, latestContacts] =
+    await Promise.all([
+      prisma.contact.count(),
+      prisma.contact.count({ where: { status: "Pending" } }),
+      prisma.contact.count({
+        where: { status: { in: ["Done", "Completed", "Resolved"] } },
+      }),
+      prisma.contact.findMany({
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          subject: true,
+          status: true,
+          createdAt: true,
+        },
+      }),
+    ]);
 
   return (
     <div className="space-y-8">
@@ -51,14 +62,14 @@ export default async function DashboardPage() {
         <div className="glass rounded-2xl p-5">
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <MessageSquareText className="h-4 w-4" />
+              <Clock3 className="h-4 w-4" />
             </span>
             <div>
               <p className="text-xs uppercase tracking-[0.14em] text-muted">
-                Latest subject
+                Pending / unresponded
               </p>
-              <p className="truncate font-display text-lg font-bold text-foreground">
-                {latestContacts[0]?.subject ?? "—"}
+              <p className="font-display text-2xl font-bold text-foreground">
+                {pendingContacts}
               </p>
             </div>
           </div>
@@ -66,14 +77,14 @@ export default async function DashboardPage() {
         <div className="glass rounded-2xl p-5">
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
-              <Users className="h-4 w-4" />
+              <CheckCircle2 className="h-4 w-4" />
             </span>
             <div>
               <p className="text-xs uppercase tracking-[0.14em] text-muted">
-                Latest sender
+                Resolved / completed
               </p>
-              <p className="truncate font-display text-lg font-bold text-foreground">
-                {latestContacts[0]?.name ?? "—"}
+              <p className="font-display text-2xl font-bold text-foreground">
+                {resolvedContacts}
               </p>
             </div>
           </div>
@@ -110,7 +121,7 @@ export default async function DashboardPage() {
                     {contact.name}
                   </p>
                   <p className="truncate text-sm text-muted">
-                    {contact.subject} · {contact.email}
+                    {contact.subject} · {contact.email} · {contact.status}
                   </p>
                 </div>
                 <p className="shrink-0 text-xs text-muted">

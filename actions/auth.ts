@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getClientIp } from "@/lib/auth/client-ip";
-import { verifyPassword } from "@/lib/auth/password";
 import { createTotpPendingToken, verifyTotpPendingToken } from "@/lib/auth/pending-token";
 import {
   assertLoginAllowed,
@@ -22,6 +21,10 @@ import {
   setAdminSession,
 } from "@/lib/auth/session";
 import { decryptTotpSecret, verifyTotpCode } from "@/lib/auth/totp";
+import {
+  createAnonAuthClient,
+  isSupabaseAuthConfigured,
+} from "@/lib/supabase/admin";
 import {
   loginSchema,
   totpCodeSchema,
@@ -43,6 +46,28 @@ export type LoginResult =
       retryAfterSeconds?: number;
       attemptsRemaining?: number;
     };
+
+function authFail(
+  rateKey: string,
+  attemptsRemainingFallback: number,
+): Extract<LoginResult, { ok: false }> {
+  const afterFail = recordLoginFailure(rateKey);
+  if (afterFail.blocked) {
+    return {
+      ok: false,
+      code: "RATE_LIMITED",
+      error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
+      retryAfterSeconds: afterFail.retryAfterSeconds,
+      attemptsRemaining: 0,
+    };
+  }
+  return {
+    ok: false,
+    code: "AUTH",
+    error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
+    attemptsRemaining: afterFail.attemptsRemaining ?? attemptsRemainingFallback,
+  };
+}
 
 export async function loginAction(
   input: LoginInput,
@@ -87,61 +112,45 @@ export async function loginAction(
     }
   }
 
-  try {
-    const admin = await prisma.admin.findUnique({
-      where: { email },
-    });
+  if (!isSupabaseAuthConfigured()) {
+    return {
+      ok: false,
+      code: "AUTH",
+      error: "Authentication is not configured. Missing Supabase credentials.",
+      attemptsRemaining: limit.attemptsRemaining,
+    };
+  }
 
-    if (!admin) {
-      const afterFail = recordLoginFailure(rateKey);
-      if (afterFail.blocked) {
-        return {
-          ok: false,
-          code: "RATE_LIMITED",
-          error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
-          retryAfterSeconds: afterFail.retryAfterSeconds,
-          attemptsRemaining: 0,
-        };
-      }
-      return {
-        ok: false,
-        code: "AUTH",
-        error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
-        attemptsRemaining: afterFail.attemptsRemaining,
-      };
+  try {
+    const supabase = createAnonAuthClient();
+    const { data: authData, error: authError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password: parsed.data.password,
+      });
+
+    if (authError || !authData.user) {
+      return authFail(rateKey, limit.attemptsRemaining);
     }
 
-    const valid = await verifyPassword(
-      parsed.data.password,
-      admin.passwordHash,
-    );
+    const profile = await prisma.profile.findUnique({
+      where: { id: authData.user.id },
+    });
 
-    if (!valid) {
-      const afterFail = recordLoginFailure(rateKey);
-      if (afterFail.blocked) {
-        return {
-          ok: false,
-          code: "RATE_LIMITED",
-          error: `Too many failed attempts. Try again in ${afterFail.retryAfterSeconds}s.`,
-          retryAfterSeconds: afterFail.retryAfterSeconds,
-          attemptsRemaining: 0,
-        };
-      }
-      return {
-        ok: false,
-        code: "AUTH",
-        error: `Invalid email or password. ${afterFail.attemptsRemaining} attempt${afterFail.attemptsRemaining === 1 ? "" : "s"} left.`,
-        attemptsRemaining: afterFail.attemptsRemaining,
-      };
+    // End Supabase session cookie/state — dashboard uses our signed admin cookie.
+    await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+
+    if (!profile || profile.role !== "Admin") {
+      return authFail(rateKey, limit.attemptsRemaining);
     }
 
     clearLoginRateLimit(rateKey);
 
-    if (admin.totpEnabled && admin.totpSecret) {
+    if (profile.totpEnabled && profile.totpSecret) {
       const pendingToken = await createTotpPendingToken({
-        sub: admin.id,
-        email: admin.email,
-        name: admin.name,
+        sub: profile.id,
+        email: profile.email,
+        name: profile.name,
       });
       return {
         ok: true,
@@ -151,19 +160,19 @@ export async function loginAction(
     }
 
     await setAdminSession({
-      sub: admin.id,
-      email: admin.email,
-      name: admin.name,
+      sub: profile.id,
+      email: profile.email,
+      name: profile.name,
     });
 
     return { ok: true };
   } catch (error) {
-    console.error("loginAction database error:", error);
+    console.error("loginAction error:", error);
     return {
       ok: false,
       code: "AUTH",
       error:
-        "Unable to reach the database. Please try again in a moment.",
+        "Unable to sign in right now. Please try again in a moment.",
       attemptsRemaining: limit.attemptsRemaining,
     };
   }
@@ -204,11 +213,11 @@ export async function verifyTotpAction(
   }
 
   try {
-    const admin = await prisma.admin.findUnique({
+    const profile = await prisma.profile.findUnique({
       where: { id: pending.sub },
     });
 
-    if (!admin?.totpEnabled || !admin.totpSecret) {
+    if (!profile?.totpEnabled || !profile.totpSecret) {
       return {
         ok: false,
         code: "TOTP",
@@ -216,11 +225,11 @@ export async function verifyTotpAction(
       };
     }
 
-    const plainSecret = decryptTotpSecret(admin.totpSecret);
+    const plainSecret = decryptTotpSecret(profile.totpSecret);
     const valid = verifyTotpCode(
       plainSecret,
       parsed.data.code,
-      admin.email,
+      profile.email,
     );
 
     if (!valid) {
@@ -245,9 +254,9 @@ export async function verifyTotpAction(
     clearLoginRateLimit(rateKey);
 
     await setAdminSession({
-      sub: admin.id,
-      email: admin.email,
-      name: admin.name,
+      sub: profile.id,
+      email: profile.email,
+      name: profile.name,
     });
 
     return { ok: true };

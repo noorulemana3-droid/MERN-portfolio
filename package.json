@@ -11,6 +11,7 @@
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "seed:admin": "tsx scripts/seed-admin.ts",
     "db:studio": "prisma studio"
   },
   "prisma": {
@@ -48,6 +49,7 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "prisma": "^6.19.3",

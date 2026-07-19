@@ -1,23 +1,90 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { updateContactStatusAction } from "@/actions/contacts";
+
+export type ContactStatusValue = "Pending" | "Done" | "Completed" | "Resolved";
+
 type ContactRow = {
   id: string;
   name: string;
   email: string;
   subject: string;
   message: string;
-  status: "Pending" | "Reviewed" | "Resolved";
+  status: ContactStatusValue;
   createdAt: Date;
   updatedAt: Date;
 };
 
-function statusClass(status: ContactRow["status"]) {
+const STATUS_OPTIONS: ContactStatusValue[] = [
+  "Pending",
+  "Done",
+  "Completed",
+  "Resolved",
+];
+
+function statusClass(status: ContactStatusValue) {
   switch (status) {
-    case "Reviewed":
+    case "Done":
       return "bg-sky-500/15 text-sky-700 dark:text-sky-300";
+    case "Completed":
+      return "bg-indigo-500/15 text-indigo-700 dark:text-indigo-300";
     case "Resolved":
       return "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300";
     default:
       return "bg-amber-500/15 text-amber-800 dark:text-amber-200";
   }
+}
+
+function StatusSelect({
+  contactId,
+  status,
+}: {
+  contactId: string;
+  status: ContactStatusValue;
+}) {
+  const router = useRouter();
+  const [value, setValue] = useState(status);
+  const [error, setError] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  const onChange = (next: ContactStatusValue) => {
+    const previous = value;
+    setValue(next);
+    setError("");
+    startTransition(async () => {
+      const result = await updateContactStatusAction({
+        id: contactId,
+        status: next,
+      });
+      if (!result.ok) {
+        setValue(previous);
+        setError(result.error);
+        return;
+      }
+      router.refresh();
+    });
+  };
+
+  return (
+    <div className="min-w-[8.5rem]">
+      <select
+        value={value}
+        disabled={isPending}
+        onChange={(event) => onChange(event.target.value as ContactStatusValue)}
+        aria-label="Contact status"
+        className={`h-9 w-full rounded-lg border border-border bg-background px-2 text-xs font-medium focus-ring disabled:opacity-60 ${statusClass(value)}`}
+      >
+        {STATUS_OPTIONS.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      {error ? <p className="mt-1 text-[11px] text-danger">{error}</p> : null}
+    </div>
+  );
 }
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
@@ -58,11 +125,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
                   </p>
                 </td>
                 <td className="px-4 py-3">
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${statusClass(contact.status)}`}
-                  >
-                    {contact.status}
-                  </span>
+                  <StatusSelect contactId={contact.id} status={contact.status} />
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-xs text-muted">
                   {contact.createdAt.toLocaleString()}

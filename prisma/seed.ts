@@ -1,40 +1,19 @@
-import { hash } from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
+/**
+ * Prisma seed entrypoint — delegates to Task 6 seed-admin script
+ * (Supabase Auth user + profiles table).
+ */
+import { spawnSync } from "node:child_process";
+import { resolve } from "node:path";
 
-const prisma = new PrismaClient();
+const result = spawnSync(
+  process.execPath,
+  ["--import", "tsx", resolve("scripts/seed-admin.ts")],
+  {
+    stdio: "inherit",
+    env: process.env,
+  },
+);
 
-async function main() {
-  const email = (
-    process.env.ADMIN_EMAIL || "nooruleman.a.3@gmail.com"
-  )
-    .trim()
-    .toLowerCase();
-  const name = (process.env.ADMIN_NAME || "Noor-Ul-Eman").trim();
-  const password = process.env.ADMIN_PASSWORD || "Admin@12345";
-
-  const passwordHash = await hash(password, 12);
-
-  const admin = await prisma.admin.upsert({
-    where: { email },
-    update: {
-      name,
-      passwordHash,
-    },
-    create: {
-      email,
-      name,
-      passwordHash,
-    },
-  });
-
-  console.log(`Seeded admin: ${admin.email} (${admin.name})`);
+if (result.status !== 0) {
+  process.exit(result.status ?? 1);
 }
-
-main()
-  .catch((error) => {
-    console.error("Seed failed:", error);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

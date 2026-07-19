@@ -4,7 +4,6 @@ import { SignJWT, jwtVerify } from "jose";
 import QRCode from "qrcode";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth/guards";
-import { verifyPassword } from "@/lib/auth/password";
 import {
   buildTotpUri,
   decryptTotpSecret,
@@ -12,6 +11,7 @@ import {
   generateTotpSecret,
   verifyTotpCode,
 } from "@/lib/auth/totp";
+import { createAnonAuthClient } from "@/lib/supabase/admin";
 import {
   totpDisableSchema,
   totpEnableConfirmSchema,
@@ -64,14 +64,14 @@ export type TotpStatusResult = {
 
 export async function getTotpStatus(): Promise<TotpStatusResult> {
   const session = await requireAdmin();
-  const admin = await prisma.admin.findUnique({
+  const profile = await prisma.profile.findUnique({
     where: { id: session.sub },
     select: { totpEnabled: true, totpVerifiedAt: true },
   });
 
   return {
-    enabled: Boolean(admin?.totpEnabled),
-    verifiedAt: admin?.totpVerifiedAt?.toISOString() ?? null,
+    enabled: Boolean(profile?.totpEnabled),
+    verifiedAt: profile?.totpVerifiedAt?.toISOString() ?? null,
   };
 }
 
@@ -89,19 +89,19 @@ export async function startTotpSetupAction(): Promise<TotpSetupStartResult> {
   const session = await requireAdmin();
 
   try {
-    const admin = await prisma.admin.findUnique({
+    const profile = await prisma.profile.findUnique({
       where: { id: session.sub },
       select: { email: true, totpEnabled: true },
     });
-    if (!admin) {
+    if (!profile) {
       return { ok: false, error: "Admin account not found." };
     }
-    if (admin.totpEnabled) {
+    if (profile.totpEnabled) {
       return { ok: false, error: "Two-factor authentication is already enabled." };
     }
 
     const plainSecret = generateTotpSecret();
-    const otpauthUrl = buildTotpUri(plainSecret, admin.email);
+    const otpauthUrl = buildTotpUri(plainSecret, profile.email);
     const qrDataUrl = await QRCode.toDataURL(otpauthUrl, {
       errorCorrectionLevel: "M",
       margin: 1,
@@ -150,21 +150,21 @@ export async function confirmTotpSetupAction(
   }
 
   try {
-    const admin = await prisma.admin.findUnique({
+    const profile = await prisma.profile.findUnique({
       where: { id: session.sub },
       select: { email: true, totpEnabled: true },
     });
-    if (!admin) {
+    if (!profile) {
       return { ok: false, error: "Admin account not found." };
     }
-    if (admin.totpEnabled) {
+    if (profile.totpEnabled) {
       return { ok: false, error: "Two-factor authentication is already enabled." };
     }
 
     const valid = verifyTotpCode(
       setup.plainSecret,
       parsed.data.code,
-      admin.email,
+      profile.email,
     );
     if (!valid) {
       return {
@@ -173,7 +173,7 @@ export async function confirmTotpSetupAction(
       };
     }
 
-    await prisma.admin.update({
+    await prisma.profile.update({
       where: { id: session.sub },
       data: {
         totpSecret: encryptTotpSecret(setup.plainSecret),
@@ -208,35 +208,38 @@ export async function disableTotpAction(
   }
 
   try {
-    const admin = await prisma.admin.findUnique({
+    const profile = await prisma.profile.findUnique({
       where: { id: session.sub },
     });
-    if (!admin) {
+    if (!profile) {
       return { ok: false, error: "Admin account not found." };
     }
-    if (!admin.totpEnabled || !admin.totpSecret) {
+    if (!profile.totpEnabled || !profile.totpSecret) {
       return { ok: false, error: "Two-factor authentication is not enabled." };
     }
 
-    const passwordOk = await verifyPassword(
-      parsed.data.password,
-      admin.passwordHash,
-    );
-    if (!passwordOk) {
+    const supabase = createAnonAuthClient();
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email: profile.email,
+      password: parsed.data.password,
+    });
+    await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+
+    if (authError) {
       return { ok: false, error: "Incorrect password." };
     }
 
-    const plainSecret = decryptTotpSecret(admin.totpSecret);
+    const plainSecret = decryptTotpSecret(profile.totpSecret);
     const codeOk = verifyTotpCode(
       plainSecret,
       parsed.data.code,
-      admin.email,
+      profile.email,
     );
     if (!codeOk) {
       return { ok: false, error: "Invalid authenticator code." };
     }
 
-    await prisma.admin.update({
+    await prisma.profile.update({
       where: { id: session.sub },
       data: {
         totpSecret: null,
