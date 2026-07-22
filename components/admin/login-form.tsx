@@ -176,7 +176,7 @@ export function LoginForm({
   };
 
   return (
-    <div className="glass w-full max-w-md rounded-2xl p-8">
+    <div className="glass w-full max-w-md rounded-2xl p-8 lg:max-w-none">
       <div className="mb-8 text-center">
         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent">
           <LockKeyhole className="h-5 w-5" />
