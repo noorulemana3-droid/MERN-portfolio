@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { PROJECTS } from "@/data/portfolio";
+import { ProjectCover } from "@/components/projects/project-cover";
 import { Section, SectionHeading } from "@/components/ui/section";
 import type { ProjectFilter } from "@/types";
 import { cn } from "@/lib/utils";
@@ -56,66 +57,68 @@ export function ProjectsSection() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {filtered.map((project, index) => (
-          <motion.article
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.05 }}
-            className="group overflow-hidden rounded-2xl glass glass-lift"
-          >
-            <div
-              className="relative h-48 overflow-hidden"
-              style={{
-                backgroundImage: `linear-gradient(145deg, color-mix(in oklab, var(--accent) 42%, transparent), transparent 55%), url(${project.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+        {filtered.map((project, index) => {
+          const isMobile = project.filters.includes("mobile");
+          return (
+            <motion.article
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="group overflow-hidden rounded-2xl glass glass-lift"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-80 transition group-hover:opacity-100" />
-              <Link
-                href={`/projects/${project.id}`}
-                className="absolute inset-0 flex items-end p-5 opacity-0 transition duration-300 group-hover:opacity-100"
+              <div
+                className={cn(
+                  "relative bg-[#0b0a09]",
+                  isMobile ? "flex justify-center px-10 py-6 sm:px-16" : "",
+                )}
               >
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-background/70 px-3 py-1.5 text-sm font-semibold text-foreground backdrop-blur-md">
-                  View details
-                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </Link>
-            </div>
-            <div className="relative p-6">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-xl font-bold text-foreground transition group-hover:text-accent">
-                  {project.title}
-                </h3>
-                <span className="shrink-0 rounded-md border border-border bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted">
-                  {project.year}
-                </span>
+                <ProjectCover
+                  title={project.title}
+                  image={project.image}
+                  href={`/projects/${project.id}`}
+                  variant={isMobile ? "mobile" : "desktop"}
+                  className={cn(
+                    "w-full",
+                    isMobile && "max-w-[220px] rounded-[1.25rem] shadow-2xl shadow-black/40 ring-1 ring-white/10",
+                  )}
+                  priority={index < 2}
+                />
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {project.description}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.technologies.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-md border border-border bg-background/45 px-2.5 py-1 text-[11px] text-muted transition group-hover:border-accent/25"
-                  >
-                    {t}
+              <div className="relative p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-xl font-bold text-foreground transition group-hover:text-accent">
+                    {project.title}
+                  </h3>
+                  <span className="shrink-0 rounded-md border border-border bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted">
+                    {project.year}
                   </span>
-                ))}
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {project.description}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.technologies.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-md border border-border bg-background/45 px-2.5 py-1 text-[11px] text-muted transition group-hover:border-accent/25"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <Link
+                  href={`/projects/${project.id}`}
+                  className="mt-5 inline-flex items-center gap-1 rounded text-sm font-semibold text-accent hover:underline focus-ring"
+                >
+                  Full details
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
               </div>
-              <Link
-                href={`/projects/${project.id}`}
-                className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-accent hover:underline focus-ring rounded"
-              >
-                Full details
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </motion.article>
-        ))}
+            </motion.article>
+          );
+        })}
       </div>
 
       {filtered.length === 0 ? (

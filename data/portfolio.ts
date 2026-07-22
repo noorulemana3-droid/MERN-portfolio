@@ -205,7 +205,7 @@ export const PROJECTS: Project[] = [
       "A modern developer portfolio showcasing skills, projects, experience, and a functional contact system.",
     longDescription:
       "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, admin dashboard with 2FA, and Contact Us flows designed for recruiters.",
-    image: "/images/projects/portfolio.svg",
+    image: "/images/projects/portfolio-screen.png",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -217,6 +217,7 @@ export const PROJECTS: Project[] = [
     ],
     filters: ["mern", "react", "backend"],
     featured: true,
+    liveUrl: "https://mern-portfolio-lilac.vercel.app",
     githubUrl: "https://github.com/noorulemana3-droid/MERN-portfolio",
     year: 2026,
   },
@@ -227,7 +228,7 @@ export const PROJECTS: Project[] = [
       "A Spotify-inspired music streaming application built with React Native and Expo.",
     longDescription:
       "SoundWave is a mobile music streaming application featuring playlists, search, album screens, responsive UI, and smooth navigation. Developed using React Native and Expo to deliver a modern cross-platform experience.",
-    image: "/images/projects/soundwave.svg",
+    image: "/images/projects/soundwave-screen.png",
     technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
     filters: ["react", "mobile"],
     featured: true,
@@ -242,7 +243,7 @@ export const PROJECTS: Project[] = [
       "A modern coffee shop website with product showcase and contact functionality.",
     longDescription:
       "A responsive React application featuring Home, About, Products, Employees, and Contact pages with product filtering, search, form validation, and a clean user experience.",
-    image: "/images/projects/boutique-coffee.svg",
+    image: "/images/projects/boutique-coffee-screen.png",
     technologies: ["React", "JavaScript", "CSS", "React Router"],
     filters: ["react"],
     featured: true,
@@ -256,7 +257,7 @@ export const PROJECTS: Project[] = [
       "Java Swing desktop application for practicing technical, HR, and behavioral interviews.",
     longDescription:
       "A desktop-based mock interview simulator built with Java Swing. It provides multiple interview categories, timed MCQs, score calculation, grading, and performance feedback to help students prepare for interviews.",
-    image: "/images/projects/mock-interview.svg",
+    image: "/images/projects/mock-interview-screen.png",
     technologies: ["Java", "Java Swing", "OOP"],
     filters: ["java"],
     featured: true,
