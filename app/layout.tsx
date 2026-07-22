@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Outfit, Syne } from "next/font/google";
+import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { AppProviders } from "@/providers/app-providers";
 import { SITE } from "@/data/portfolio";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
 });
 
-const syne = Syne({
-  variable: "--font-syne",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${syne.variable} min-h-screen antialiased`}
+        className={`${figtree.variable} ${bricolage.variable} min-h-screen antialiased`}
       >
         <AppProviders>{children}</AppProviders>
       </body>

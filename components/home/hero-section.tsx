@@ -46,9 +46,10 @@ export function HeroSection() {
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute -left-24 top-24 h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute -right-16 top-40 h-[26rem] w-[26rem] rounded-full bg-accent-secondary/10 blur-3xl" />
-        <div className="animate-float-soft absolute bottom-16 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl" />
+        <div className="animate-ember-pulse absolute -left-28 top-10 h-[32rem] w-[32rem] rounded-full bg-[var(--orb-a)] blur-3xl" />
+        <div className="absolute -right-20 top-32 h-[28rem] w-[28rem] rounded-full bg-[var(--orb-b)] blur-3xl" />
+        <div className="animate-float-soft absolute bottom-10 left-[42%] h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
       </div>
 
       <div className="container-narrow relative z-10 grid items-center gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-8 lg:py-24">
