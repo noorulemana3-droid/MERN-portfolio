@@ -36,10 +36,7 @@ export function SkillsSection() {
             </div>
             <div className="mt-5 flex flex-wrap gap-2">
               {group.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-md border border-border bg-background/50 px-3 py-1.5 text-xs font-medium text-foreground/90"
-                >
+                <span key={skill} className="skill-chip">
                   {skill}
                 </span>
               ))}

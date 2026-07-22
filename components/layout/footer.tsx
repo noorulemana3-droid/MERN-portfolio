@@ -4,7 +4,7 @@ import { SocialIcons } from "@/components/common/social-icons";
 
 export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-border bg-background/80 pt-12">
+    <footer className="relative z-10 border-t border-border bg-background/55 pt-12 backdrop-blur-md">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent" />
 
       <div className="container-narrow px-4 sm:px-6 lg:px-8">
