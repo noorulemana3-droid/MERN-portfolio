@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { RecaptchaBadgeCleaner } from "@/components/admin/recaptcha-badge-cleaner";
 import { requireAdmin } from "@/lib/auth/guards";
 
 export const metadata: Metadata = {
@@ -19,7 +20,11 @@ export default async function DashboardLayout({
   const admin = await requireAdmin();
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
+    <div
+      data-admin-shell
+      className="flex min-h-screen flex-col lg:flex-row"
+    >
+      <RecaptchaBadgeCleaner />
       <AdminSidebar adminName={admin.name} />
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="hidden border-b border-border px-6 py-4 lg:block">

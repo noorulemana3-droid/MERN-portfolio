@@ -488,3 +488,10 @@ body {
     0 24px 60px -24px rgba(194, 65, 12, 0.55),
     0 0 0 1px rgba(251, 146, 60, 0.12);
 }
+
+/* Hide reCAPTCHA badge outside login (attribution stays on the login form). */
+body:has([data-admin-shell]) .grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

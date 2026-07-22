@@ -14,6 +14,31 @@ declare global {
   }
 }
 
+/** Remove Google reCAPTCHA badge / widgets left in the DOM. */
+export function removeRecaptchaBadge() {
+  if (typeof document === "undefined") return;
+
+  document
+    .querySelectorAll(".grecaptcha-badge")
+    .forEach((node) => node.remove());
+
+  document
+    .querySelectorAll('iframe[src*="recaptcha"], iframe[src*="google.com/recaptcha"]')
+    .forEach((node) => {
+      const parent = node.parentElement;
+      node.remove();
+      // Google often wraps the badge iframe in a fixed container
+      if (
+        parent &&
+        parent !== document.body &&
+        parent.childElementCount === 0 &&
+        parent.className === ""
+      ) {
+        parent.remove();
+      }
+    });
+}
+
 export function useRecaptchaV3(siteKey: string) {
   const [ready, setReady] = useState(false);
 
@@ -31,22 +56,28 @@ export function useRecaptchaV3(siteKey: string) {
       window.grecaptcha?.ready(() => setReady(true));
     };
 
+    let script = existing;
+
     if (existing) {
       if (window.grecaptcha) markReady();
       else existing.addEventListener("load", markReady);
-      return;
+    } else {
+      script = document.createElement("script");
+      script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+      script.async = true;
+      script.defer = true;
+      script.dataset.recaptcha = "v3";
+      script.addEventListener("load", markReady);
+      document.head.appendChild(script);
     }
 
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-    script.async = true;
-    script.defer = true;
-    script.dataset.recaptcha = "v3";
-    script.addEventListener("load", markReady);
-    document.head.appendChild(script);
-
     return () => {
-      script.removeEventListener("load", markReady);
+      // Leaving the login page — badge must not follow into the dashboard.
+      removeRecaptchaBadge();
+      setReady(false);
+      if (script && !existing) {
+        script.removeEventListener("load", markReady);
+      }
     };
   }, [siteKey]);
 
