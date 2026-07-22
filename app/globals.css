@@ -426,7 +426,8 @@ body {
   .gradient-text,
   .atmosphere-ribbon-a,
   .atmosphere-ribbon-b,
-  .atmosphere-ribbon-c {
+  .atmosphere-ribbon-c,
+  .login-stars {
     animation: none;
   }
 
@@ -435,4 +436,56 @@ body {
   .gradient-btn {
     transition: none;
   }
+}
+
+/* ---------- Auth / login galaxy theme ---------- */
+.login-galaxy-shell {
+  background: #05010f;
+}
+
+.login-galaxy-bg {
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 20%, rgba(109, 40, 217, 0.45), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 75%, rgba(14, 165, 233, 0.28), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 60% 30%, rgba(219, 39, 119, 0.22), transparent 55%),
+    linear-gradient(160deg, #05010f 0%, #0b0620 45%, #12082a 100%);
+}
+
+.login-galaxy-glow {
+  background:
+    radial-gradient(circle at 70% 40%, rgba(167, 139, 250, 0.12), transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.1), transparent 35%);
+}
+
+.login-stars {
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 28% 42%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 44% 12%, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 62% 58%, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(2px 2px at 78% 22%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 88% 68%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 18% 72%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 52% 82%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 36% 28%, rgba(186, 230, 253, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 70% 48%, rgba(233, 213, 255, 0.85), transparent);
+  animation: star-twinkle 5s ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.login-galaxy-shell .glass {
+  border-color: rgba(196, 181, 253, 0.18);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 24px 60px -24px rgba(76, 29, 149, 0.65),
+    0 0 0 1px rgba(139, 92, 246, 0.12);
 }
