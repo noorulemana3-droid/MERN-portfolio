@@ -3,67 +3,72 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  Ember Atelier — warm forge atmosphere
-  Deep charcoal + copper/amber (not galaxy, not purple, not cream+terracotta editorial)
+  Ember Atelier — refined forge atmosphere
+  Charcoal + copper/amber with depth, grain, and soft light (not galaxy)
 */
 :root {
-  --background: #f3f1ee;
-  --foreground: #1a1512;
-  --card: #faf8f5;
-  --card-foreground: #1a1512;
-  --muted: #6b5e54;
-  --border: #1a151214;
+  --background: #ebe8e4;
+  --foreground: #161210;
+  --card: #f7f4f0;
+  --card-foreground: #161210;
+  --muted: #6a5d52;
+  --border: #16121016;
   --accent: #c2410c;
-  --accent-secondary: #b45309;
-  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
-  --glow: color-mix(in oklab, var(--accent) 10%, transparent);
-  --glass: #faf8f5e8;
-  --glass-border: #1a151214;
-  --nav: #f3f1eed9;
+  --accent-secondary: #d97706;
+  --accent-soft: color-mix(in oklab, var(--accent) 11%, transparent);
+  --glow: color-mix(in oklab, var(--accent) 14%, transparent);
+  --glass: #f7f4f0f0;
+  --glass-border: #16121014;
+  --nav: #ebe8e4e6;
   --danger: #dc2626;
   --surface-gradient:
-    radial-gradient(ellipse 75% 50% at 0% 0%, #f0d5c4 0%, transparent 52%),
-    radial-gradient(ellipse 60% 45% at 100% 8%, #e8dcc8 0%, transparent 48%),
-    radial-gradient(ellipse 50% 40% at 50% 100%, #e6ddd4 0%, transparent 55%),
-    linear-gradient(165deg, #f6f3ef 0%, #efeae4 42%, #e8e2da 100%);
+    radial-gradient(ellipse 85% 55% at -5% -10%, #efc9b0 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 105% 0%, #e6d5b8 0%, transparent 46%),
+    radial-gradient(ellipse 55% 40% at 55% 110%, #ddd4c8 0%, transparent 50%),
+    linear-gradient(168deg, #f4f0eb 0%, #ebe6df 45%, #e4ddd4 100%);
   --mesh:
     radial-gradient(
-      color-mix(in oklab, var(--foreground) 7%, transparent) 0.7px,
-      transparent 0.7px
+      color-mix(in oklab, var(--foreground) 8%, transparent) 0.65px,
+      transparent 0.65px
     );
-  --mesh-size: 22px 22px;
-  --orb-a: color-mix(in oklab, #c2410c 18%, transparent);
-  --orb-b: color-mix(in oklab, #b45309 14%, transparent);
+  --mesh-size: 20px 20px;
+  --orb-a: color-mix(in oklab, #c2410c 22%, transparent);
+  --orb-b: color-mix(in oklab, #d97706 16%, transparent);
+  --orb-c: color-mix(in oklab, #9a3412 10%, transparent);
+  --shine: color-mix(in oklab, white 55%, transparent);
 }
 
 .dark {
-  --background: #0c0a09;
-  --foreground: #f3ebe3;
-  --card: #161210;
-  --card-foreground: #f3ebe3;
-  --muted: #a89888;
-  --border: #f3ebe314;
+  --background: #090807;
+  --foreground: #f6eee6;
+  --card: #14110e;
+  --card-foreground: #f6eee6;
+  --muted: #b0a090;
+  --border: #f6eee616;
   --accent: #fb923c;
-  --accent-secondary: #f59e0b;
-  --accent-soft: color-mix(in oklab, var(--accent) 14%, transparent);
-  --glow: color-mix(in oklab, var(--accent) 12%, transparent);
-  --glass: #161210cc;
-  --glass-border: #f3ebe312;
-  --nav: #0c0a09d9;
+  --accent-secondary: #fbbf24;
+  --accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
+  --glow: color-mix(in oklab, var(--accent) 18%, transparent);
+  --glass: #14110ee0;
+  --glass-border: #f6eee614;
+  --nav: #090807eb;
   --danger: #f87171;
   --surface-gradient:
-    radial-gradient(ellipse 70% 48% at 5% -8%, #3b1a0c 0%, transparent 55%),
-    radial-gradient(ellipse 55% 42% at 95% 0%, #2a1a08 0%, transparent 50%),
-    radial-gradient(ellipse 45% 35% at 70% 85%, #1f120c 0%, transparent 50%),
-    linear-gradient(168deg, #0c0a09 0%, #110e0c 48%, #0c0a09 100%);
+    radial-gradient(ellipse 75% 52% at 0% -12%, #4a1d0c 0%, transparent 52%),
+    radial-gradient(ellipse 60% 45% at 100% -5%, #3d2208 0%, transparent 48%),
+    radial-gradient(ellipse 50% 38% at 80% 100%, #24140e 0%, transparent 52%),
+    radial-gradient(ellipse 40% 30% at 20% 70%, #1a100c 0%, transparent 55%),
+    linear-gradient(170deg, #090807 0%, #0f0c0a 50%, #090807 100%);
   --mesh:
     radial-gradient(
-      color-mix(in oklab, var(--foreground) 8%, transparent) 0.7px,
-      transparent 0.7px
+      color-mix(in oklab, var(--foreground) 9%, transparent) 0.65px,
+      transparent 0.65px
     );
-  --mesh-size: 22px 22px;
-  --orb-a: color-mix(in oklab, #fb923c 16%, transparent);
-  --orb-b: color-mix(in oklab, #f59e0b 12%, transparent);
+  --mesh-size: 20px 20px;
+  --orb-a: color-mix(in oklab, #fb923c 20%, transparent);
+  --orb-b: color-mix(in oklab, #fbbf24 14%, transparent);
+  --orb-c: color-mix(in oklab, #ea580c 10%, transparent);
+  --shine: color-mix(in oklab, white 8%, transparent);
 }
 
 @theme inline {
@@ -98,9 +103,9 @@ body {
   font-family: var(--font-figtree), system-ui, sans-serif;
   min-height: 100vh;
   letter-spacing: -0.015em;
+  text-rendering: optimizeLegibility;
 }
 
-/* Soft dotted grain — atelier texture, not starfield */
 body::before {
   content: "";
   pointer-events: none;
@@ -109,82 +114,150 @@ body::before {
   z-index: -1;
   background-image: var(--mesh);
   background-size: var(--mesh-size);
-  opacity: 0.4;
+  opacity: 0.45;
   mask-image: radial-gradient(
-    ellipse 80% 70% at 50% 25%,
-    black 15%,
+    ellipse 85% 72% at 50% 20%,
+    black 12%,
     transparent 78%
   );
 }
 
-/* Warm vignette for depth */
 body::after {
   content: "";
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(
-    ellipse 90% 80% at 50% 40%,
-    transparent 40%,
-    color-mix(in oklab, var(--background) 78%, black) 100%
-  );
-  opacity: 0.55;
+  background:
+    radial-gradient(
+      ellipse 100% 90% at 50% 35%,
+      transparent 35%,
+      color-mix(in oklab, var(--background) 72%, black) 100%
+    );
+  opacity: 0.65;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 38%, transparent);
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
   color: var(--foreground);
 }
 
 .font-display {
   font-family: var(--font-bricolage), var(--font-figtree), system-ui, sans-serif;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
+  font-optical-sizing: auto;
 }
 
 .glass {
+  position: relative;
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: blur(22px) saturate(1.25);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
   box-shadow:
-    0 1px 0 color-mix(in oklab, white 45%, transparent) inset,
-    0 20px 44px -30px color-mix(in oklab, var(--foreground) 22%, transparent);
+    0 1px 0 var(--shine) inset,
+    0 22px 48px -32px color-mix(in oklab, var(--foreground) 24%, transparent);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.glass::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--accent) 12%, transparent) 0%,
+    transparent 42%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glass:hover::before {
+  opacity: 1;
 }
 
 .dark .glass {
   box-shadow:
-    0 1px 0 color-mix(in oklab, white 5%, transparent) inset,
-    0 24px 50px -28px color-mix(in oklab, black 70%, transparent),
-    0 0 0 1px color-mix(in oklab, var(--accent) 6%, transparent);
+    0 1px 0 var(--shine) inset,
+    0 28px 56px -30px color-mix(in oklab, black 75%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+.glass-lift:hover {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--glass-border));
+  box-shadow:
+    0 1px 0 var(--shine) inset,
+    0 28px 60px -28px color-mix(in oklab, var(--accent) 28%, transparent),
+    0 18px 40px -30px color-mix(in oklab, var(--foreground) 20%, transparent);
+  transform: translateY(-3px);
 }
 
 .gradient-text {
   background: linear-gradient(
     115deg,
     var(--accent) 0%,
-    var(--accent-secondary) 45%,
-    #ea580c 100%
+    var(--accent-secondary) 40%,
+    #ea580c 70%,
+    var(--accent) 100%
   );
-  background-size: 200% auto;
+  background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmer 9s ease-in-out infinite;
+  animation: shimmer 8s ease-in-out infinite;
 }
 
 .gradient-btn {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(
     135deg,
     var(--accent) 0%,
-    var(--accent-secondary) 100%
+    var(--accent-secondary) 55%,
+    #ea580c 100%
   );
   color: white;
-  box-shadow: 0 12px 30px -14px color-mix(in oklab, var(--accent) 65%, transparent);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 25%, transparent) inset,
+    0 14px 32px -14px color-mix(in oklab, var(--accent) 70%, transparent);
+  transition:
+    filter 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.gradient-btn::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    color-mix(in oklab, white 28%, transparent) 48%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
 }
 
 .gradient-btn:hover {
-  filter: brightness(1.06) saturate(1.05);
+  filter: brightness(1.07) saturate(1.08);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 color-mix(in oklab, white 28%, transparent) inset,
+    0 18px 36px -12px color-mix(in oklab, var(--accent) 75%, transparent);
+}
+
+.gradient-btn:hover::after {
+  transform: translateX(120%);
 }
 
 .container-narrow {
@@ -204,16 +277,17 @@ body::after {
 }
 
 .eyebrow {
-  @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-accent;
+  @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-accent;
 }
 
 .eyebrow-line::before {
   content: "";
   display: inline-block;
-  width: 1.25rem;
-  height: 1px;
-  background: var(--accent);
-  opacity: 0.75;
+  width: 1.5rem;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+  opacity: 0.9;
+  border-radius: 1px;
 }
 
 @keyframes shimmer {
@@ -232,26 +306,74 @@ body::after {
     transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-10px) scale(1.03);
+    transform: translateY(-12px) scale(1.04);
   }
 }
 
 @keyframes ember-pulse {
   0%,
   100% {
-    opacity: 0.55;
+    opacity: 0.5;
     transform: scale(1);
   }
   50% {
-    opacity: 0.85;
-    transform: scale(1.06);
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(18px, -12px);
+  }
+  66% {
+    transform: translate(-10px, 14px);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
   }
 }
 
 .animate-float-soft {
-  animation: float-soft 8s ease-in-out infinite;
+  animation: float-soft 9s ease-in-out infinite;
 }
 
 .animate-ember-pulse {
-  animation: ember-pulse 10s ease-in-out infinite;
+  animation: ember-pulse 11s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+.animate-caret {
+  animation: caret-blink 1.05s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-soft,
+  .animate-ember-pulse,
+  .animate-drift,
+  .animate-caret,
+  .gradient-text {
+    animation: none;
+  }
+
+  .glass,
+  .glass-lift,
+  .gradient-btn {
+    transition: none;
+  }
 }

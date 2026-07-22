@@ -21,7 +21,7 @@ export function SkillsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
-            className="glass rounded-2xl p-6 md:p-7"
+            className="glass glass-lift rounded-2xl p-6 md:p-7"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

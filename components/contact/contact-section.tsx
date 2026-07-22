@@ -27,7 +27,7 @@ export function ContactSection({
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-2xl p-6 md:p-8"
+          className="glass glass-lift rounded-2xl p-6 md:p-8"
         >
           <h3 className="font-display text-lg font-bold text-foreground">
             Direct channels
@@ -62,7 +62,7 @@ export function ContactSection({
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass relative rounded-2xl p-6 md:p-8"
+          className="glass glass-lift relative rounded-2xl p-6 md:p-8"
         >
           <ContactForm />
         </motion.div>

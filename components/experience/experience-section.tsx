@@ -21,7 +21,7 @@ export function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.06 }}
-            className="glass rounded-2xl p-6 md:p-8"
+            className="glass glass-lift rounded-2xl p-6 md:p-8"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
               <span>

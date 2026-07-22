@@ -63,32 +63,35 @@ export function ProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
-            className="group overflow-hidden rounded-2xl glass"
+            className="group overflow-hidden rounded-2xl glass glass-lift"
           >
             <div
-              className="relative h-44"
+              className="relative h-48 overflow-hidden"
               style={{
-                backgroundImage: `linear-gradient(135deg, color-mix(in oklab, var(--accent) 35%, transparent), transparent), url(${project.image})`,
+                backgroundImage: `linear-gradient(145deg, color-mix(in oklab, var(--accent) 42%, transparent), transparent 55%), url(${project.image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             >
+              <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-80 transition group-hover:opacity-100" />
               <Link
                 href={`/projects/${project.id}`}
-                className="absolute inset-0 flex items-end bg-gradient-to-t from-background/80 via-transparent to-transparent p-4 opacity-0 transition group-hover:opacity-100"
+                className="absolute inset-0 flex items-end p-5 opacity-0 transition duration-300 group-hover:opacity-100"
               >
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-foreground">
+                <span className="inline-flex items-center gap-1.5 rounded-lg bg-background/70 px-3 py-1.5 text-sm font-semibold text-foreground backdrop-blur-md">
                   View details
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </Link>
             </div>
-            <div className="p-6">
+            <div className="relative p-6">
               <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-xl font-bold text-foreground">
+                <h3 className="font-display text-xl font-bold text-foreground transition group-hover:text-accent">
                   {project.title}
                 </h3>
-                <span className="text-xs text-muted">{project.year}</span>
+                <span className="shrink-0 rounded-md border border-border bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted">
+                  {project.year}
+                </span>
               </div>
               <p className="mt-3 text-sm leading-relaxed text-muted">
                 {project.description}
@@ -97,7 +100,7 @@ export function ProjectsSection() {
                 {project.technologies.map((t) => (
                   <span
                     key={t}
-                    className="rounded-md border border-border bg-background/40 px-2.5 py-1 text-[11px] text-muted"
+                    className="rounded-md border border-border bg-background/45 px-2.5 py-1 text-[11px] text-muted transition group-hover:border-accent/25"
                   >
                     {t}
                   </span>

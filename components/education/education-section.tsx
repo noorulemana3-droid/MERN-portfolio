@@ -21,7 +21,7 @@ export function EducationSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: index * 0.08 }}
-            className="glass rounded-2xl p-6 md:p-8"
+            className="glass glass-lift rounded-2xl p-6 md:p-8"
           >
             <p className="text-sm text-muted">
               {edu.startDate} – {edu.endDate}

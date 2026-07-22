@@ -29,7 +29,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
+      <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.85rem] md:leading-[1.08]">
         {title}
       </h2>
       {description ? (
@@ -39,7 +39,7 @@ export function SectionHeading({
       ) : null}
       <div
         className={cn(
-          "mt-6 h-px w-16 bg-gradient-to-r from-accent via-accent-secondary to-transparent",
+          "mt-7 h-[2px] w-20 rounded-full bg-gradient-to-r from-accent via-accent-secondary to-transparent",
           align === "center" && "mx-auto",
         )}
       />

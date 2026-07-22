@@ -37,10 +37,16 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b transition-all duration-300",
         scrolled || open
-          ? "border-border bg-[var(--nav)] backdrop-blur-xl"
+          ? "border-border/80 bg-[var(--nav)] shadow-[0_8px_30px_-20px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
           : "border-transparent bg-transparent",
       )}
     >
+      {scrolled ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/35 to-transparent"
+        />
+      ) : null}
       <nav
         className="container-narrow flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
         aria-label="Primary"
