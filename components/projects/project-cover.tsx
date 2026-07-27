@@ -27,31 +27,35 @@ export function ProjectCover({
   const frame = (
     <div
       className={cn(
-        "relative overflow-hidden bg-[#0b0a09]",
+        "relative overflow-hidden bg-[#0B1120]",
         isMobile ? "aspect-[9/16] max-h-full" : "aspect-[16/10]",
         className,
       )}
     >
-      {/* Browser chrome */}
       {!isMobile ? (
-        <div className="relative z-10 flex items-center gap-2 border-b border-white/10 bg-[#161311] px-3 py-2">
+        <div className="relative z-10 flex items-center gap-2 border-b border-white/10 bg-[#111827] px-3 py-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          <div className="ml-2 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-[10px] text-white/45">
+          <div className="ml-2 flex-1 truncate rounded-md bg-white/5 px-3 py-1 font-mono text-[10px] text-white/45">
             {title}
           </div>
         </div>
       ) : (
-        <div className="relative z-10 flex items-center justify-center border-b border-white/10 bg-[#161311] py-2">
+        <div className="relative z-10 flex items-center justify-center border-b border-white/10 bg-[#111827] py-2">
           <div className="h-1.5 w-16 rounded-full bg-white/20" />
         </div>
       )}
 
-      <div className={cn("relative w-full", isMobile ? "h-[calc(100%-1.75rem)]" : "h-[calc(100%-2.25rem)]")}>
+      <div
+        className={cn(
+          "relative w-full",
+          isMobile ? "h-[calc(100%-1.75rem)]" : "h-[calc(100%-2.25rem)]",
+        )}
+      >
         <Image
           src={image}
-          alt={`${title} first screen`}
+          alt={`${title} product screen`}
           fill
           priority={priority}
           sizes={
@@ -77,7 +81,11 @@ export function ProjectCover({
   if (!href) return frame;
 
   return (
-    <Link href={href} className="block focus-ring rounded-[inherit]" aria-label={`Open ${title}`}>
+    <Link
+      href={href}
+      className="block rounded-[inherit] focus-ring"
+      aria-label={`Open ${title}`}
+    >
       {frame}
     </Link>
   );

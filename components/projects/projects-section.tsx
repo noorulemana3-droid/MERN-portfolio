@@ -36,7 +36,7 @@ export function ProjectsSection() {
       <SectionHeading
         eyebrow="Projects"
         title="Selected work"
-        description="Product-shaped builds across MERN, React, and Java — filter by focus area."
+        description="Desktop product screens with description, tech stack, and links — built for recruiter review."
       />
 
       <div className="mb-10 flex flex-wrap justify-center gap-2">
@@ -58,107 +58,89 @@ export function ProjectsSection() {
       </div>
 
       <div className="flex flex-col gap-8 md:gap-12">
-        {filtered.map((project, index) => {
-          const isMobile = project.coverVariant === "mobile";
-          const mediaOnRight = index % 2 === 1;
+        {filtered.map((project, index) => (
+          <motion.article
+            key={project.id}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: Math.min(index * 0.06, 0.24) }}
+            className="group overflow-hidden rounded-[1.25rem] glass glass-lift"
+          >
+            <div className="grid items-stretch lg:grid-cols-2">
+              {/* Always media on the left */}
+              <div className="relative bg-[#0B1120]">
+                <ProjectCover
+                  title={project.title}
+                  image={project.image}
+                  href={`/projects/${project.id}`}
+                  variant="desktop"
+                  className="w-full"
+                  priority={index < 2}
+                />
+              </div>
 
-          return (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: Math.min(index * 0.06, 0.24) }}
-              className="group overflow-hidden rounded-2xl glass glass-lift"
-            >
-              <div className="grid items-stretch lg:grid-cols-2">
-                <div
-                  className={cn(
-                    "relative bg-[#0b0a09]",
-                    mediaOnRight && "lg:order-2",
-                    isMobile && "flex justify-center px-10 py-8 sm:px-16 sm:py-10",
-                  )}
-                >
-                  <ProjectCover
-                    title={project.title}
-                    image={project.image}
-                    href={`/projects/${project.id}`}
-                    variant={isMobile ? "mobile" : "desktop"}
-                    className={cn(
-                      "w-full",
-                      isMobile &&
-                        "max-w-[220px] rounded-[1.25rem] shadow-2xl shadow-black/40 ring-1 ring-white/10",
-                    )}
-                    priority={index < 2}
-                  />
+              {/* Always details on the right */}
+              <div className="relative flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-2xl font-bold tracking-tight text-foreground transition group-hover:text-accent md:text-[1.65rem]">
+                    {project.title}
+                  </h3>
+                  <span className="shrink-0 rounded-md border border-border bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted">
+                    {project.year}
+                  </span>
                 </div>
 
-                <div
-                  className={cn(
-                    "relative flex flex-col justify-center p-6 sm:p-8 lg:p-10",
-                    mediaOnRight && "lg:order-1",
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-2xl font-bold tracking-tight text-foreground transition group-hover:text-accent md:text-[1.65rem]">
-                      {project.title}
-                    </h3>
-                    <span className="shrink-0 rounded-md border border-border bg-background/40 px-2 py-0.5 text-[11px] font-medium text-muted">
-                      {project.year}
-                    </span>
-                  </div>
+                <p className="mt-4 text-sm leading-relaxed text-muted md:text-[0.95rem]">
+                  {project.description}
+                </p>
 
-                  <p className="mt-4 text-sm leading-relaxed text-muted md:text-[0.95rem]">
-                    {project.description}
-                  </p>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {project.technologies.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-md border border-border bg-background/45 px-2.5 py-1 text-[11px] text-muted transition group-hover:border-accent/25"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold gradient-btn focus-ring"
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.technologies.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-md border border-border bg-background/45 px-2.5 py-1 text-[11px] text-muted transition group-hover:border-accent/25"
                     >
-                      Full details
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </Link>
-                    {project.liveUrl ? (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card/70 px-3.5 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-ring"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" />
-                        Live
-                      </a>
-                    ) : null}
-                    {project.githubUrl ? (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card/70 px-3.5 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-ring"
-                      >
-                        <FaGithub className="h-3.5 w-3.5" />
-                        Code
-                      </a>
-                    ) : null}
-                  </div>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <Link
+                    href={`/projects/${project.id}`}
+                    className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold gradient-btn focus-ring"
+                  >
+                    Full details
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card/70 px-3.5 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-ring"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      Live Demo
+                    </a>
+                  ) : null}
+                  {project.githubUrl ? (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card/70 px-3.5 py-2 text-sm font-medium text-foreground transition hover:border-accent/40 hover:text-accent focus-ring"
+                    >
+                      <FaGithub className="h-3.5 w-3.5" />
+                      GitHub
+                    </a>
+                  ) : null}
                 </div>
               </div>
-            </motion.article>
-          );
-        })}
+            </div>
+          </motion.article>
+        ))}
       </div>
 
       {filtered.length === 0 ? (

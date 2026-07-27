@@ -12,17 +12,17 @@ import type {
 export const SITE = {
   name: "Noor-Ul-Eman",
   shortName: "Noor",
-  title: "Noor-Ul-Eman | Full-Stack MERN Developer",
+  title: "Noor-Ul-Eman | Software Engineer | MERN Stack Developer",
   description:
-    "I build scalable, responsive and modern web applications using the MERN Stack and modern JavaScript technologies.",
+    "Building modern, scalable web applications with Next.js, React, Node.js, and AI-powered solutions.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en_US",
   email: "nooruleman.a.3@gmail.com",
   location: "Pakistan",
-  role: "Software Engineer",
-  subtitle: "Software Engineer · Full-Stack MERN Developer",
+  role: "Software Engineer | MERN Stack Developer",
+  subtitle: "Software Engineer · MERN Stack Developer",
   tagline:
-    "I build scalable, responsive and modern web applications using the MERN Stack and modern JavaScript technologies. From polished React interfaces to secure Node.js APIs and MongoDB data models, I ship production-ready experiences end to end.",
+    "Building modern, scalable web applications with Next.js, React, Node.js, and AI-powered solutions.",
   panelTitle: "Building scalable systems that feel effortless to use.",
   panelBody:
     "Full-stack MERN development with a strong interest in AI, clean architecture, and continuous learning.",
@@ -38,9 +38,21 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Projects", href: "/#projects" },
   { label: "Experience", href: "/#experience" },
   { label: "Education", href: "/#education" },
-  { label: "Resume", href: "/#resume" },
+  { label: "GitHub", href: "/#github" },
   { label: "Contact", href: "/#contact" },
 ];
+
+/** Highlighted skills with proficiency for progress-bar UI */
+export const FEATURED_SKILLS = [
+  { name: "React", level: 90 },
+  { name: "Next.js", level: 88 },
+  { name: "TypeScript", level: 85 },
+  { name: "Node.js", level: 82 },
+  { name: "MongoDB", level: 75 },
+  { name: "Tailwind CSS", level: 88 },
+  { name: "Express.js", level: 80 },
+  { name: "PostgreSQL", level: 72 },
+] as const;
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
@@ -199,6 +211,30 @@ export const SKILLS = SKILL_GROUPS.flatMap((group) =>
 
 export const PROJECTS: Project[] = [
   {
+    id: "portfolio-mern-stack-developer-intern",
+    title: "MERN Portfolio",
+    description:
+      "A modern developer portfolio showcasing skills, projects, experience, and a functional contact system.",
+    longDescription:
+      "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, admin dashboard with 2FA, and Contact Us flows designed for recruiters.",
+    image: "/images/projects/portfolio-screen.png",
+    coverVariant: "desktop",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "Prisma",
+      "Framer Motion",
+      "Vercel",
+    ],
+    filters: ["mern", "react", "backend"],
+    featured: true,
+    liveUrl: "https://mern-portfolio-lilac.vercel.app",
+    githubUrl: "https://github.com/noorulemana3-droid/MERN-portfolio",
+    year: 2026,
+  },
+  {
     id: "expenseiq-ai",
     title: "ExpenseIQ AI",
     description:
@@ -226,46 +262,6 @@ export const PROJECTS: Project[] = [
     year: 2026,
   },
   {
-    id: "portfolio-mern-stack-developer-intern",
-    title: "MERN Portfolio",
-    description:
-      "A modern developer portfolio showcasing skills, projects, experience, and a functional contact system.",
-    longDescription:
-      "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, admin dashboard with 2FA, and Contact Us flows designed for recruiters.",
-    image: "/images/projects/portfolio-screen.png",
-    coverVariant: "desktop",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Supabase",
-      "Prisma",
-      "Framer Motion",
-      "Vercel",
-    ],
-    filters: ["mern", "react", "backend"],
-    featured: true,
-    liveUrl: "https://mern-portfolio-lilac.vercel.app",
-    githubUrl: "https://github.com/noorulemana3-droid/MERN-portfolio",
-    year: 2026,
-  },
-  {
-    id: "soundwave-spotify-clone",
-    title: "SoundWave - Spotify Clone",
-    description:
-      "A Spotify-inspired music streaming application built with React Native and Expo.",
-    longDescription:
-      "SoundWave is a mobile music streaming application featuring playlists, search, album screens, responsive UI, and smooth navigation. Developed using React Native and Expo to deliver a modern cross-platform experience.",
-    image: "/images/projects/soundwave-screen.png",
-    coverVariant: "mobile",
-    technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
-    filters: ["react", "mobile"],
-    featured: true,
-    githubUrl:
-      "https://github.com/noorulemana3-droid/SoundWave--------Spotify-Clone",
-    year: 2026,
-  },
-  {
     id: "boutique-coffee",
     title: "Boutique Coffee Made Simple",
     description:
@@ -278,6 +274,22 @@ export const PROJECTS: Project[] = [
     filters: ["react"],
     featured: true,
     githubUrl: "https://github.com/noorulemana3-droid/BOUTIQUE-COFFEE-MADE",
+    year: 2026,
+  },
+  {
+    id: "soundwave-spotify-clone",
+    title: "SoundWave - Spotify Clone",
+    description:
+      "A Spotify-inspired music streaming application built with React Native and Expo.",
+    longDescription:
+      "SoundWave is a mobile music streaming application featuring playlists, search, album screens, responsive UI, and smooth navigation. Developed using React Native and Expo to deliver a modern cross-platform experience.",
+    image: "/images/projects/soundwave-screen.png",
+    coverVariant: "desktop",
+    technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
+    filters: ["react", "mobile"],
+    featured: true,
+    githubUrl:
+      "https://github.com/noorulemana3-droid/SoundWave--------Spotify-Clone",
     year: 2026,
   },
   {

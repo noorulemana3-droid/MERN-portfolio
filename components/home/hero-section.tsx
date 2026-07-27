@@ -112,7 +112,7 @@ export function HeroSection() {
               className="focus-ring relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold gradient-btn"
             >
               <FolderGit2 className="h-4 w-4" />
-              Explore Projects
+              View Projects
             </a>
             <a
               href={SITE.resumePath}

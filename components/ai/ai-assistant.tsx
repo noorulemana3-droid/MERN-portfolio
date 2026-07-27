@@ -134,7 +134,7 @@ export function AiAssistant() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white disabled:opacity-50 dark:text-[#071018] focus-ring"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-white disabled:opacity-50 focus-ring"
                 aria-label="Send message"
               >
                 <Send className="h-4 w-4" />

@@ -18,7 +18,7 @@ export default function Error({
       <button
         type="button"
         onClick={reset}
-        className="mt-6 rounded-xl bg-accent px-5 py-3 text-sm font-medium text-white dark:text-[#07120e]"
+        className="mt-6 rounded-xl bg-accent px-5 py-3 text-sm font-medium text-white"
       >
         Try again
       </button>

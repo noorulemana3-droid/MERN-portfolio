@@ -3,60 +3,68 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  Obsidian Ember — cinematic forge atmosphere
-  Beats generic purple galaxy with warm depth, ribbons, and film grain.
+  Midnight Aurora — modern · minimal · premium
+  Dark navy base with blue / purple / cyan accents.
 */
 :root {
-  --background: #e8e4df;
-  --foreground: #14110e;
-  --card: #f5f1ec;
-  --card-foreground: #14110e;
-  --muted: #65584e;
-  --border: #14110e14;
-  --accent: #c2410c;
-  --accent-secondary: #ca8a04;
+  --background: #f1f5f9;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --muted: #64748b;
+  --border: #0f172a14;
+  --accent: #3b82f6;
+  --accent-secondary: #8b5cf6;
+  --accent-cyan: #06b6d4;
   --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
   --glow: color-mix(in oklab, var(--accent) 16%, transparent);
-  --glass: #f5f1ecf2;
-  --glass-border: #14110e12;
-  --nav: #e8e4dfee;
-  --danger: #dc2626;
+  --glass: #fffffff2;
+  --glass-border: #0f172a12;
+  --nav: #f1f5f9ee;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --surface: #e2e8f0;
   --surface-gradient: transparent;
   --mesh: none;
   --mesh-size: 0;
-  --orb-a: color-mix(in oklab, #c2410c 24%, transparent);
-  --orb-b: color-mix(in oklab, #ca8a04 18%, transparent);
-  --orb-c: color-mix(in oklab, #9a3412 12%, transparent);
-  --shine: color-mix(in oklab, white 50%, transparent);
-  --ribbon-a: color-mix(in oklab, #c2410c 28%, transparent);
-  --ribbon-b: color-mix(in oklab, #ca8a04 22%, transparent);
-  --ribbon-c: color-mix(in oklab, #ea580c 16%, transparent);
+  --orb-a: color-mix(in oklab, #3b82f6 28%, transparent);
+  --orb-b: color-mix(in oklab, #8b5cf6 22%, transparent);
+  --orb-c: color-mix(in oklab, #06b6d4 16%, transparent);
+  --shine: color-mix(in oklab, white 55%, transparent);
+  --ribbon-a: color-mix(in oklab, #3b82f6 30%, transparent);
+  --ribbon-b: color-mix(in oklab, #8b5cf6 24%, transparent);
+  --ribbon-c: color-mix(in oklab, #06b6d4 18%, transparent);
 }
 
 .dark {
-  --background: #050403;
-  --foreground: #f7efe6;
-  --card: #12100d;
-  --card-foreground: #f7efe6;
-  --muted: #b5a492;
-  --border: #f7efe614;
-  --accent: #fb923c;
-  --accent-secondary: #fbbf24;
+  --background: #0b1120;
+  --foreground: #f8fafc;
+  --card: #1f2937;
+  --card-foreground: #f8fafc;
+  --muted: #94a3b8;
+  --border: #f8fafc14;
+  --accent: #3b82f6;
+  --accent-secondary: #8b5cf6;
+  --accent-cyan: #06b6d4;
   --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
   --glow: color-mix(in oklab, var(--accent) 22%, transparent);
-  --glass: #12100de8;
-  --glass-border: #f7efe612;
-  --nav: #050403f0;
-  --danger: #f87171;
+  --glass: #111827e8;
+  --glass-border: #f8fafc12;
+  --nav: #0b1120f0;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --surface: #111827;
   --surface-gradient: transparent;
   --mesh: none;
-  --orb-a: color-mix(in oklab, #fb923c 26%, transparent);
-  --orb-b: color-mix(in oklab, #fbbf24 18%, transparent);
-  --orb-c: color-mix(in oklab, #ea580c 14%, transparent);
-  --shine: color-mix(in oklab, white 9%, transparent);
-  --ribbon-a: color-mix(in oklab, #fb923c 32%, transparent);
-  --ribbon-b: color-mix(in oklab, #fbbf24 24%, transparent);
-  --ribbon-c: color-mix(in oklab, #ea580c 18%, transparent);
+  --orb-a: color-mix(in oklab, #3b82f6 32%, transparent);
+  --orb-b: color-mix(in oklab, #8b5cf6 26%, transparent);
+  --orb-c: color-mix(in oklab, #06b6d4 20%, transparent);
+  --shine: color-mix(in oklab, white 10%, transparent);
+  --ribbon-a: color-mix(in oklab, #3b82f6 36%, transparent);
+  --ribbon-b: color-mix(in oklab, #8b5cf6 28%, transparent);
+  --ribbon-c: color-mix(in oklab, #06b6d4 22%, transparent);
 }
 
 @theme inline {
@@ -69,8 +77,9 @@
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-soft: var(--accent-soft);
   --color-danger: var(--danger);
-  --font-sans: var(--font-figtree);
-  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-poppins);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
@@ -86,31 +95,31 @@ body {
   position: relative;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-figtree), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   min-height: 100vh;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   text-rendering: optimizeLegibility;
 }
 
 /* Atmosphere layers (used by Atmosphere component) */
 .atmosphere-base {
   background:
-    radial-gradient(ellipse 90% 60% at 10% -5%, var(--orb-a), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 95% 5%, var(--orb-b), transparent 50%),
-    radial-gradient(ellipse 55% 45% at 50% 100%, var(--orb-c), transparent 55%),
+    radial-gradient(ellipse 90% 60% at 12% -8%, var(--orb-a), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 92% 8%, var(--orb-b), transparent 50%),
+    radial-gradient(ellipse 55% 45% at 48% 105%, var(--orb-c), transparent 55%),
     linear-gradient(180deg, var(--background) 0%, var(--background) 100%);
 }
 
 .atmosphere-ribbon {
   border-radius: 50%;
-  filter: blur(48px);
+  filter: blur(52px);
   mix-blend-mode: screen;
   transform-origin: center;
 }
 
 :root .atmosphere-ribbon {
   mix-blend-mode: multiply;
-  opacity: 0.55;
+  opacity: 0.45;
 }
 
 .atmosphere-ribbon-a {
@@ -148,8 +157,23 @@ body {
   animation-delay: -8s;
 }
 
+.atmosphere-particles {
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, color-mix(in oklab, #3b82f6 70%, white), transparent),
+    radial-gradient(1.5px 1.5px at 28% 72%, color-mix(in oklab, #8b5cf6 65%, white), transparent),
+    radial-gradient(1.2px 1.2px at 48% 32%, color-mix(in oklab, #06b6d4 70%, white), transparent),
+    radial-gradient(1.5px 1.5px at 68% 58%, color-mix(in oklab, #3b82f6 55%, white), transparent),
+    radial-gradient(1.2px 1.2px at 82% 22%, color-mix(in oklab, #8b5cf6 60%, white), transparent),
+    radial-gradient(1px 1px at 90% 78%, color-mix(in oklab, #06b6d4 50%, white), transparent),
+    radial-gradient(1.5px 1.5px at 8% 88%, color-mix(in oklab, #3b82f6 45%, white), transparent),
+    radial-gradient(1px 1px at 55% 90%, color-mix(in oklab, #8b5cf6 50%, white), transparent);
+  background-size: 100% 100%;
+  opacity: 0.55;
+  animation: particle-drift 28s ease-in-out infinite;
+}
+
 .atmosphere-grain {
-  opacity: 0.28;
+  opacity: 0.18;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   background-size: 180px 180px;
   mix-blend-mode: overlay;
@@ -161,7 +185,7 @@ body {
     transparent 25%,
     color-mix(in oklab, var(--background) 55%, black) 100%
   );
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 ::selection {
@@ -170,20 +194,23 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-bricolage), var(--font-figtree), system-ui, sans-serif;
-  letter-spacing: -0.05em;
-  font-optical-sizing: auto;
+  font-family: var(--font-poppins), var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 .glass {
   position: relative;
   background: var(--glass);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(24px) saturate(1.3);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  backdrop-filter: blur(24px) saturate(1.35);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
   box-shadow:
     0 1px 0 var(--shine) inset,
-    0 24px 50px -34px color-mix(in oklab, var(--foreground) 26%, transparent);
+    0 24px 50px -34px color-mix(in oklab, var(--foreground) 22%, transparent);
   transition:
     border-color 0.35s ease,
     box-shadow 0.35s ease,
@@ -230,8 +257,8 @@ body {
   background: linear-gradient(
     115deg,
     var(--accent) 0%,
-    var(--accent-secondary) 38%,
-    #ea580c 68%,
+    var(--accent-secondary) 40%,
+    var(--accent-cyan) 72%,
     var(--accent) 100%
   );
   background-size: 220% auto;
@@ -247,8 +274,8 @@ body {
   background: linear-gradient(
     135deg,
     var(--accent) 0%,
-    var(--accent-secondary) 52%,
-    #ea580c 100%
+    var(--accent-secondary) 55%,
+    var(--accent-cyan) 100%
   );
   color: white;
   box-shadow:
@@ -336,6 +363,25 @@ body {
   color: var(--foreground);
 }
 
+.skill-progress-track {
+  height: 0.5rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+.skill-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent-secondary),
+    var(--accent-cyan)
+  );
+  box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
 @keyframes shimmer {
   0%,
   100% {
@@ -356,7 +402,7 @@ body {
   }
 }
 
-@keyframes ember-pulse {
+@keyframes aurora-pulse {
   0%,
   100% {
     opacity: 0.45;
@@ -391,6 +437,18 @@ body {
   }
 }
 
+@keyframes particle-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+    opacity: 0.7;
+  }
+}
+
 @keyframes caret-blink {
   0%,
   45% {
@@ -406,8 +464,9 @@ body {
   animation: float-soft 9s ease-in-out infinite;
 }
 
-.animate-ember-pulse {
-  animation: ember-pulse 11s ease-in-out infinite;
+.animate-ember-pulse,
+.animate-aurora-pulse {
+  animation: aurora-pulse 11s ease-in-out infinite;
 }
 
 .animate-drift {
@@ -421,13 +480,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-float-soft,
   .animate-ember-pulse,
+  .animate-aurora-pulse,
   .animate-drift,
   .animate-caret,
   .gradient-text,
   .atmosphere-ribbon-a,
   .atmosphere-ribbon-b,
   .atmosphere-ribbon-c,
-  .login-sun-rays {
+  .atmosphere-particles,
+  .login-aurora-rays {
     animation: none;
   }
 
@@ -438,40 +499,44 @@ body {
   }
 }
 
-/* ---------- Auth / login sunny orange theme ---------- */
-.login-sunny-shell {
-  background: #1a0c05;
+/* ---------- Auth / login Midnight Aurora theme ---------- */
+.login-sunny-shell,
+.login-aurora-shell {
+  background: #0b1120;
 }
 
-.login-sunny-bg {
+.login-sunny-bg,
+.login-aurora-bg {
   background:
-    radial-gradient(ellipse 75% 60% at 85% 10%, rgba(251, 191, 36, 0.55), transparent 52%),
-    radial-gradient(ellipse 65% 50% at 10% 80%, rgba(194, 65, 12, 0.4), transparent 50%),
-    radial-gradient(ellipse 50% 40% at 50% 40%, rgba(234, 88, 12, 0.22), transparent 55%),
-    linear-gradient(165deg, #1a0c05 0%, #2a1408 42%, #3b1a0c 100%);
+    radial-gradient(ellipse 75% 60% at 85% 10%, rgba(59, 130, 246, 0.45), transparent 52%),
+    radial-gradient(ellipse 65% 50% at 10% 80%, rgba(139, 92, 246, 0.38), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 40%, rgba(6, 182, 212, 0.2), transparent 55%),
+    linear-gradient(165deg, #0b1120 0%, #111827 42%, #1f2937 100%);
 }
 
-.login-sunny-glow {
+.login-sunny-glow,
+.login-aurora-glow {
   background:
-    radial-gradient(circle at 80% 15%, rgba(253, 224, 71, 0.22), transparent 38%),
-    radial-gradient(circle at 20% 70%, rgba(249, 115, 22, 0.16), transparent 40%);
+    radial-gradient(circle at 80% 15%, rgba(59, 130, 246, 0.2), transparent 38%),
+    radial-gradient(circle at 20% 70%, rgba(139, 92, 246, 0.16), transparent 40%);
 }
 
-.login-sun-rays {
+.login-sun-rays,
+.login-aurora-rays {
   background: conic-gradient(
     from 210deg at 78% 12%,
     transparent 0deg,
-    rgba(251, 191, 36, 0.12) 18deg,
+    rgba(59, 130, 246, 0.14) 18deg,
     transparent 36deg,
-    rgba(249, 115, 22, 0.1) 54deg,
+    rgba(139, 92, 246, 0.12) 54deg,
     transparent 72deg,
-    rgba(251, 191, 36, 0.08) 90deg,
+    rgba(6, 182, 212, 0.1) 90deg,
     transparent 120deg
   );
-  animation: sun-pulse 8s ease-in-out infinite;
+  animation: aurora-login-pulse 8s ease-in-out infinite;
 }
 
-@keyframes sun-pulse {
+@keyframes aurora-login-pulse {
   0%,
   100% {
     opacity: 0.4;
@@ -481,12 +546,13 @@ body {
   }
 }
 
-.login-sunny-shell .glass {
-  border-color: rgba(251, 146, 60, 0.22);
+.login-sunny-shell .glass,
+.login-aurora-shell .glass {
+  border-color: rgba(59, 130, 246, 0.22);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
-    0 24px 60px -24px rgba(194, 65, 12, 0.55),
-    0 0 0 1px rgba(251, 146, 60, 0.12);
+    0 24px 60px -24px rgba(59, 130, 246, 0.45),
+    0 0 0 1px rgba(139, 92, 246, 0.12);
 }
 
 /* Hide reCAPTCHA badge outside login (attribution stays on the login form). */

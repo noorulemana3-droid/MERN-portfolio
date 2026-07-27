@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
 import { AppProviders } from "@/providers/app-providers";
 import { SITE } from "@/data/portfolio";
 import "./globals.css";
 
-const figtree = Figtree({
-  variable: "--font-figtree",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -28,6 +35,7 @@ export const metadata: Metadata = {
     "Next.js",
     "TypeScript",
     "Full Stack Developer",
+    "MERN Stack",
   ],
   authors: [{ name: SITE.name }],
   creator: SITE.name,
@@ -58,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${figtree.variable} ${bricolage.variable} min-h-screen antialiased`}
+        className={`${inter.variable} ${poppins.variable} ${jetbrains.variable} min-h-screen antialiased`}
       >
         <AppProviders>{children}</AppProviders>
       </body>

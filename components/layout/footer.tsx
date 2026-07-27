@@ -2,6 +2,15 @@ import Link from "next/link";
 import { SITE, SOCIAL_LINKS, NAV_ITEMS } from "@/data/portfolio";
 import { SocialIcons } from "@/components/common/social-icons";
 
+const TECH_STACK = [
+  "Next.js 15",
+  "TypeScript",
+  "Tailwind CSS",
+  "Supabase",
+  "Prisma",
+  "Vercel",
+];
+
 export function Footer() {
   return (
     <footer className="relative z-10 border-t border-border bg-background/55 pt-12 backdrop-blur-md">
@@ -15,7 +24,16 @@ export function Footer() {
               <span className="gradient-text">.</span>
             </p>
             <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-              {SITE.role} · Building clean, scalable web products.
+              {SITE.role}
+            </p>
+            <p className="mt-4 text-xs leading-relaxed text-muted">
+              Built with{" "}
+              {TECH_STACK.map((tech, i) => (
+                <span key={tech}>
+                  <span className="text-foreground/80">{tech}</span>
+                  {i < TECH_STACK.length - 1 ? " · " : ""}
+                </span>
+              ))}
             </p>
             <p className="mt-3 text-xs text-muted">
               © {new Date().getFullYear()} {SITE.name}
@@ -56,7 +74,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Clear space so Ask AI + back-to-top never cover footer content */}
         <div className="h-28 sm:h-24" aria-hidden="true" />
       </div>
     </footer>

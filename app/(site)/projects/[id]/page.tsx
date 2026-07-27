@@ -28,7 +28,7 @@ export default async function ProjectDetailPage({ params }: Props) {
   const project = PROJECTS.find((item) => item.id === id);
   if (!project) notFound();
 
-  const isMobile = project.coverVariant === "mobile";
+  const isMobile = false;
 
   return (
     <div className="section-pad relative z-10 pt-28">
@@ -45,12 +45,12 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div
             className={
               isMobile
-                ? "flex justify-center bg-[#0b0a09] px-8 py-10 sm:px-16"
-                : "relative bg-[#0b0a09]"
+                ? "flex justify-center bg-[#0B1120] px-8 py-10 sm:px-16"
+                : "relative bg-[#0B1120]"
             }
           >
             {!isMobile ? (
-              <div className="flex items-center gap-2 border-b border-white/10 bg-[#161311] px-4 py-2.5">
+              <div className="flex items-center gap-2 border-b border-white/10 bg-[#111827] px-4 py-2.5">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
