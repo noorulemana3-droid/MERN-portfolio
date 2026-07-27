@@ -64,7 +64,7 @@ export const HERO_ROLES = [
 ];
 
 export const HERO_STATS = [
-  { label: "Projects", value: "4+" },
+  { label: "Projects", value: "5+" },
   { label: "Skill Areas", value: "6+" },
   { label: "Years Learning", value: "3+" },
 ];
@@ -199,6 +199,32 @@ export const SKILLS = SKILL_GROUPS.flatMap((group) =>
 
 export const PROJECTS: Project[] = [
   {
+    id: "expenseiq-ai",
+    title: "ExpenseIQ AI",
+    description:
+      "Cross-platform expense tracker with AI categorization, Realtime sync, Chrome extension, Android, and desktop.",
+    longDescription:
+      "ExpenseIQ AI is a full-stack expense tracker built with Next.js 15, TypeScript, Tailwind CSS, Prisma, and Supabase (Auth, PostgreSQL, Realtime). It includes expense CRUD, AI-assisted category suggestions, HTML Canvas analytics, a Chrome extension Quick Add flow, an Expo Android app, and a Tauri desktop shell — all sharing one backend. Live on Vercel with a Downloads page for client artifacts.",
+    image: "/images/projects/expenseiq-screen.png",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "Prisma",
+      "React Native",
+      "Expo",
+      "Tauri",
+      "Chrome Extension",
+      "Vercel",
+    ],
+    filters: ["mern", "react", "backend", "mobile"],
+    featured: true,
+    liveUrl: "https://expenseiq-ai-three.vercel.app",
+    githubUrl: "https://github.com/noorulemana3-droid/ExpenseIQ-AI",
+    year: 2026,
+  },
+  {
     id: "portfolio-mern-stack-developer-intern",
     title: "MERN Portfolio",
     description:
@@ -286,6 +312,7 @@ export const EXPERIENCES: Experience[] = [
       "Team Collaboration",
     ],
     highlights: [
+      "Shipped ExpenseIQ AI — Next.js + Supabase expense tracker with Realtime, Canvas analytics, Chrome extension, Expo Android, and Tauri desktop.",
       "Built a production-ready portfolio using Next.js, TypeScript, Tailwind CSS, and Supabase.",
       "Developed responsive and reusable React components following modern development practices.",
       "Integrated GitHub, Vercel, and cloud services for version control and deployment.",
