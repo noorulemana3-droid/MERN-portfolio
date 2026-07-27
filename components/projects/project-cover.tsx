@@ -28,7 +28,7 @@ export function ProjectCover({
     <div
       className={cn(
         "relative overflow-hidden bg-[#0B1120]",
-        isMobile ? "aspect-[9/16] max-h-full" : "aspect-[16/10]",
+        isMobile ? "aspect-[9/16] max-h-full" : "aspect-[16/9] min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]",
         className,
       )}
     >

@@ -67,21 +67,21 @@ export function ProjectsSection() {
             transition={{ duration: 0.45, delay: Math.min(index * 0.06, 0.24) }}
             className="group overflow-hidden rounded-[1.25rem] glass glass-lift"
           >
-            <div className="grid items-stretch lg:grid-cols-2">
-              {/* Always media on the left */}
-              <div className="relative bg-[#0B1120]">
+            <div className="grid items-stretch lg:grid-cols-[1.2fr_0.8fr]">
+              {/* Always media on the left — larger website screenshot */}
+              <div className="relative min-h-[280px] bg-[#0B1120] sm:min-h-[320px] lg:min-h-full">
                 <ProjectCover
                   title={project.title}
                   image={project.image}
                   href={`/projects/${project.id}`}
                   variant="desktop"
-                  className="w-full"
+                  className="h-full w-full"
                   priority={index < 2}
                 />
               </div>
 
               {/* Always details on the right */}
-              <div className="relative flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+              <div className="relative flex flex-col justify-center p-6 sm:p-8 lg:p-10 xl:p-12">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display text-2xl font-bold tracking-tight text-foreground transition group-hover:text-accent md:text-[1.65rem]">
                     {project.title}
