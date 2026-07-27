@@ -28,7 +28,7 @@ export default async function ProjectDetailPage({ params }: Props) {
   const project = PROJECTS.find((item) => item.id === id);
   if (!project) notFound();
 
-  const isMobile = project.filters.includes("mobile");
+  const isMobile = project.coverVariant === "mobile";
 
   return (
     <div className="section-pad relative z-10 pt-28">

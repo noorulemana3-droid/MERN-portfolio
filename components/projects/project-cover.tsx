@@ -54,7 +54,11 @@ export function ProjectCover({
           alt={`${title} first screen`}
           fill
           priority={priority}
-          sizes={isMobile ? "(max-width:768px) 50vw, 280px" : "(max-width:768px) 100vw, 560px"}
+          sizes={
+            isMobile
+              ? "(max-width:768px) 50vw, 240px"
+              : "(max-width:1024px) 100vw, 50vw"
+          }
           className="object-cover object-top"
         />
       </div>

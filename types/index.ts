@@ -31,6 +31,8 @@ export type Project = {
   longDescription: string;
   image: string;
   gallery?: string[];
+  /** How the cover screenshot is framed — desktop browser chrome vs phone shell */
+  coverVariant?: "desktop" | "mobile";
   technologies: string[];
   filters: Exclude<ProjectFilter, "all">[];
   featured: boolean;

@@ -206,6 +206,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "ExpenseIQ AI is a full-stack expense tracker built with Next.js 15, TypeScript, Tailwind CSS, Prisma, and Supabase (Auth, PostgreSQL, Realtime). It includes expense CRUD, AI-assisted category suggestions, HTML Canvas analytics, a Chrome extension Quick Add flow, an Expo Android app, and a Tauri desktop shell — all sharing one backend. Live on Vercel with a Downloads page for client artifacts.",
     image: "/images/projects/expenseiq-screen.png",
+    coverVariant: "desktop",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -232,6 +233,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "A production-ready portfolio built with Next.js, TypeScript, Tailwind CSS, Supabase, and Framer Motion. It features a responsive UI, project showcase, AI assistant, resume section, admin dashboard with 2FA, and Contact Us flows designed for recruiters.",
     image: "/images/projects/portfolio-screen.png",
+    coverVariant: "desktop",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -255,6 +257,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "SoundWave is a mobile music streaming application featuring playlists, search, album screens, responsive UI, and smooth navigation. Developed using React Native and Expo to deliver a modern cross-platform experience.",
     image: "/images/projects/soundwave-screen.png",
+    coverVariant: "mobile",
     technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
     filters: ["react", "mobile"],
     featured: true,
@@ -270,6 +273,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "A responsive React application featuring Home, About, Products, Employees, and Contact pages with product filtering, search, form validation, and a clean user experience.",
     image: "/images/projects/boutique-coffee-screen.png",
+    coverVariant: "desktop",
     technologies: ["React", "JavaScript", "CSS", "React Router"],
     filters: ["react"],
     featured: true,
@@ -284,6 +288,7 @@ export const PROJECTS: Project[] = [
     longDescription:
       "A desktop-based mock interview simulator built with Java Swing. It provides multiple interview categories, timed MCQs, score calculation, grading, and performance feedback to help students prepare for interviews.",
     image: "/images/projects/mock-interview-screen.png",
+    coverVariant: "desktop",
     technologies: ["Java", "Java Swing", "OOP"],
     filters: ["java"],
     featured: true,
