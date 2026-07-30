@@ -64,7 +64,7 @@ export default async function ProjectDetailPage({ params }: Props) {
               className={
                 isMobile
                   ? "relative aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-[1.5rem] shadow-2xl shadow-black/50 ring-1 ring-white/10"
-                  : "relative aspect-[16/9] w-full"
+                  : "relative aspect-[16/10] w-full"
               }
             >
               <Image
@@ -75,9 +75,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                 sizes={
                   isMobile
                     ? "280px"
-                    : "(max-width: 768px) 100vw, 960px"
+                    : "(max-width: 768px) 100vw, 1100px"
                 }
-                className="object-cover object-top"
+                className="object-contain object-top bg-[#0B1120]"
               />
             </div>
           </div>

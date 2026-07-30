@@ -67,15 +67,15 @@ export function ProjectsSection() {
             transition={{ duration: 0.45, delay: Math.min(index * 0.06, 0.24) }}
             className="group overflow-hidden rounded-[1.25rem] glass glass-lift"
           >
-            <div className="grid items-stretch lg:grid-cols-[1.2fr_0.8fr]">
-              {/* Always media on the left — larger website screenshot */}
-              <div className="relative min-h-[280px] bg-[#0B1120] sm:min-h-[320px] lg:min-h-full">
+            <div className="grid items-stretch lg:grid-cols-[1.45fr_0.55fr]">
+              {/* Full product screenshot — larger left media column */}
+              <div className="relative min-h-[300px] bg-[#0B1120] sm:min-h-[360px] lg:min-h-full">
                 <ProjectCover
                   title={project.title}
                   image={project.image}
                   href={`/projects/${project.id}`}
                   variant="desktop"
-                  className="h-full w-full"
+                  className="h-full w-full rounded-none"
                   priority={index < 2}
                 />
               </div>

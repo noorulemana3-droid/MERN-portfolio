@@ -28,7 +28,9 @@ export function ProjectCover({
     <div
       className={cn(
         "relative overflow-hidden bg-[#0B1120]",
-        isMobile ? "aspect-[9/16] max-h-full" : "aspect-[16/9] min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]",
+        isMobile
+          ? "aspect-[9/16] max-h-full"
+          : "aspect-[16/10] min-h-[280px] sm:min-h-[340px] lg:min-h-[420px]",
         className,
       )}
     >
@@ -61,9 +63,9 @@ export function ProjectCover({
           sizes={
             isMobile
               ? "(max-width:768px) 50vw, 240px"
-              : "(max-width:1024px) 100vw, 50vw"
+              : "(max-width:1024px) 100vw, 60vw"
           }
-          className="object-cover object-top"
+          className="object-contain object-top bg-[#0B1120]"
         />
       </div>
 

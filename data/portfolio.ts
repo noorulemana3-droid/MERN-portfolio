@@ -211,6 +211,33 @@ export const SKILLS = SKILL_GROUPS.flatMap((group) =>
 
 export const PROJECTS: Project[] = [
   {
+    id: "expenseiq-ai",
+    title: "ExpenseIQ AI",
+    description:
+      "Cross-platform expense tracker with AI categorization, budgets & alerts, receipt OCR, Realtime sync, Chrome extension, Android, and desktop.",
+    longDescription:
+      "ExpenseIQ AI is a complete portfolio demo: a cross-platform personal expense tracker built with Next.js 15, TypeScript, Tailwind CSS, Prisma, and Supabase (Auth, PostgreSQL, Realtime). It ships expense CRUD with search/filter and duplicate, AI category suggestions, receipt OCR, category budgets with near/over-limit alerts and suggestions, monthly spending goals, multi-card AI insights, CSV export, HTML Canvas analytics, light/dark theme, a Chrome extension Quick Add flow, an Expo Android app, and a Tauri desktop shell — all on one backend. Live on Vercel with a Downloads page for client artifacts.",
+    image: "/images/projects/expenseiq-screen.png",
+    coverVariant: "desktop",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+      "Prisma",
+      "React Native",
+      "Expo",
+      "Tauri",
+      "Chrome Extension",
+      "Vercel",
+    ],
+    filters: ["mern", "react", "backend", "mobile"],
+    featured: true,
+    liveUrl: "https://expenseiq-ai-three.vercel.app",
+    githubUrl: "https://github.com/noorulemana3-droid/ExpenseIQ-AI",
+    year: 2026,
+  },
+  {
     id: "portfolio-mern-stack-developer-intern",
     title: "MERN Portfolio",
     description:
@@ -232,33 +259,6 @@ export const PROJECTS: Project[] = [
     featured: true,
     liveUrl: "https://mern-portfolio-lilac.vercel.app",
     githubUrl: "https://github.com/noorulemana3-droid/MERN-portfolio",
-    year: 2026,
-  },
-  {
-    id: "expenseiq-ai",
-    title: "ExpenseIQ AI",
-    description:
-      "Cross-platform expense tracker with AI categorization, Realtime sync, Chrome extension, Android, and desktop.",
-    longDescription:
-      "ExpenseIQ AI is a full-stack expense tracker built with Next.js 15, TypeScript, Tailwind CSS, Prisma, and Supabase (Auth, PostgreSQL, Realtime). It includes expense CRUD, AI-assisted category suggestions, HTML Canvas analytics, a Chrome extension Quick Add flow, an Expo Android app, and a Tauri desktop shell — all sharing one backend. Live on Vercel with a Downloads page for client artifacts.",
-    image: "/images/projects/expenseiq-screen.png",
-    coverVariant: "desktop",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Supabase",
-      "Prisma",
-      "React Native",
-      "Expo",
-      "Tauri",
-      "Chrome Extension",
-      "Vercel",
-    ],
-    filters: ["mern", "react", "backend", "mobile"],
-    featured: true,
-    liveUrl: "https://expenseiq-ai-three.vercel.app",
-    githubUrl: "https://github.com/noorulemana3-droid/ExpenseIQ-AI",
     year: 2026,
   },
   {
@@ -329,7 +329,7 @@ export const EXPERIENCES: Experience[] = [
       "Team Collaboration",
     ],
     highlights: [
-      "Shipped ExpenseIQ AI — Next.js + Supabase expense tracker with Realtime, Canvas analytics, Chrome extension, Expo Android, and Tauri desktop.",
+      "Shipped ExpenseIQ AI — Next.js + Supabase expense tracker with AI assist, budgets/alerts, receipt OCR, Realtime sync, Canvas analytics, Chrome extension, Expo Android, and Tauri desktop.",
       "Built a production-ready portfolio using Next.js, TypeScript, Tailwind CSS, and Supabase.",
       "Developed responsive and reusable React components following modern development practices.",
       "Integrated GitHub, Vercel, and cloud services for version control and deployment.",
