@@ -238,6 +238,30 @@ export const PROJECTS: Project[] = [
     year: 2026,
   },
   {
+    id: "calcverse",
+    title: "CalcVerse",
+    description:
+      "One calculator for every calculation — Simple, Programmer, and Scientific modes with live preview, history, and dark/light themes.",
+    longDescription:
+      "CalcVerse is a unified multi-mode calculator built with React, TypeScript, Vite, and Tailwind CSS. It features an expression-first engine (tokenize → RPN → evaluate), sticky display for clear expression feedback, Programmer mode with BIN/DEC/HEX and bitwise ops, Scientific mode with DEG/RAD and nested functions, persistent history, keyboard support, and a responsive viewport-fit UI. Logic stays in pure engines — no math inside components — making it easy to extend. Live on Vercel.",
+    image: "/images/projects/calcverse-screen.png",
+    coverVariant: "desktop",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Vitest",
+      "Lucide React",
+      "Vercel",
+    ],
+    filters: ["react"],
+    featured: true,
+    liveUrl: "https://calcverse-three.vercel.app",
+    githubUrl: "https://github.com/noorulemana3-droid/CalcVerse",
+    year: 2026,
+  },
+  {
     id: "portfolio-mern-stack-developer-intern",
     title: "MERN Portfolio",
     description:
@@ -330,6 +354,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     highlights: [
       "Shipped ExpenseIQ AI — Next.js + Supabase expense tracker with AI assist, budgets/alerts, receipt OCR, Realtime sync, Canvas analytics, Chrome extension, Expo Android, and Tauri desktop.",
+      "Built CalcVerse — a multi-mode React + TypeScript calculator (Simple, Programmer, Scientific) with live preview, history, and Vercel deployment.",
       "Built a production-ready portfolio using Next.js, TypeScript, Tailwind CSS, and Supabase.",
       "Developed responsive and reusable React components following modern development practices.",
       "Integrated GitHub, Vercel, and cloud services for version control and deployment.",
